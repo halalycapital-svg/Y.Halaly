@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>@y.halaly — תבנית היומן</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#0a0a0a;
+    color:#f0f0f0;
+    font-family:'Heebo',sans-serif;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-height:100vh;
+    padding:60px 20px 80px;
+    position:relative;
+    overflow-x:hidden;
+  }
+  body::before {
+    content:'';
+    position:fixed;
+    top:-120px; left:50%;
+    transform:translateX(-50%);
+    width:500px; height:500px;
+    background:radial-gradient(circle, rgba(232,144,10,0.10) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .container { width:100%; max-width:520px; position:relative; z-index:1; }
+
+  .tag {
+    text-align:center;
+    font-size:11px;
+    color:#e8900a;
+    letter-spacing:0.25em;
+    font-weight:700;
+    margin-bottom:40px;
+  }
+
+  .hook {
+    font-size:30px;
+    font-weight:900;
+    line-height:1.35;
+    text-align:center;
+    margin-bottom:18px;
+  }
+  .hook .hi { color:#e8900a; }
+
+  .lead {
+    font-size:15px;
+    color:#999;
+    text-align:center;
+    line-height:1.8;
+    margin-bottom:40px;
+  }
+
+  .divider {
+    width:40px; height:2px;
+    background:linear-gradient(90deg, transparent, #e8900a, transparent);
+    margin:0 auto 40px;
+  }
+
+  .story p {
+    font-size:16px;
+    line-height:1.9;
+    color:#d5d5d5;
+    margin-bottom:18px;
+  }
+  .story .hi { color:#e8900a; font-weight:800; }
+  .story .quote {
+    border-right:2px solid #e8900a;
+    padding-right:16px;
+    color:#f0f0f0;
+    font-weight:700;
+    font-size:17px;
+    margin:28px 0;
+  }
+
+  .reveal {
+    background:#111;
+    border:1px solid #1e1e1e;
+    border-radius:12px;
+    padding:28px 24px;
+    margin:36px 0;
+    text-align:center;
+  }
+  .reveal .title {
+    font-size:20px;
+    font-weight:900;
+    margin-bottom:10px;
+  }
+  .reveal .title .hi { color:#e8900a; }
+  .reveal .desc {
+    font-size:14px;
+    color:#999;
+    line-height:1.7;
+  }
+
+  .what-inside {
+    margin:32px 0;
+  }
+  .what-inside-title {
+    font-size:11px;
+    color:#555;
+    letter-spacing:0.2em;
+    font-weight:700;
+    text-align:center;
+    margin-bottom:18px;
+    text-transform:uppercase;
+  }
+  .item {
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid #1a1a1a;
+  }
+  .item:last-child { border-bottom:none; }
+  .item-dot {
+    width:8px; height:8px;
+    border-radius:50%;
+    background:#e8900a;
+    margin-top:6px;
+    flex-shrink:0;
+  }
+  .item-text { font-size:14px; color:#bbb; line-height:1.6; }
+  .item-text b { color:#f0f0f0; }
+
+  .cta-box {
+    text-align:center;
+    margin-top:48px;
+  }
+  .cta-title {
+    font-size:22px;
+    font-weight:900;
+    line-height:1.4;
+    margin-bottom:10px;
+  }
+  .cta-title .hi { color:#e8900a; }
+  .cta-sub {
+    font-size:14px;
+    color:#999;
+    line-height:1.7;
+    margin-bottom:28px;
+  }
+  .cta-btn {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background:#e8900a;
+    color:#000;
+    font-weight:900;
+    font-size:16px;
+    padding:18px 32px;
+    border-radius:10px;
+    text-decoration:none;
+    box-shadow:0 8px 30px rgba(232,144,10,0.25);
+    transition:transform 0.15s;
+  }
+  .cta-btn:active { transform:scale(0.98); }
+  .cta-note {
+    font-size:12px;
+    color:#555;
+    margin-top:16px;
+  }
+
+  .footer {
+    margin-top:60px;
+    text-align:center;
+    font-size:11px;
+    color:#2a2a2a;
+    letter-spacing:0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="tag">@y.halaly</div>
+
+  <div class="hook">
+    המערכת קרסה.<br/>
+    השוק סגור.<br/>
+    <span class="hi">מה אתה עושה עכשיו?</span>
+  </div>
+
+  <div class="lead">
+    רוב הסוחרים סוגרים את המחשב וזורקים את היום לפח.<br/>
+    אני למדתי לעשות בדיוק את ההפך.
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="story">
+    <p>לפני כמה שנים, יום כזה היה אצלי יום מבוזבז. המערכת לא עובדת? אז אין מה לעשות, נכון?</p>
+
+    <p class="quote">טעות.</p>
+
+    <p>יש לי דף אחד שאני פותח בכל פעם שאני לא יכול לסחור.</p>
+
+    <p>בדף הזה אני לא שואל שום דבר על השוק.</p>
+
+    <p>אני שואל <span class="hi">על עצמי</span>.</p>
+
+    <p>איך נכנסתי לעסקאות הקודמות. אם שמרתי על התוכנית. מה בדיוק הרגשתי כשזה לא הלך כמו שתכננתי, ואיך אני אזהה את ההרגשה הזו בפעם הבאה לפני שהיא תוביל אותי לטעות.</p>
+  </div>
+
+  <div class="reveal">
+    <div class="title">זה נשמע <span class="hi">פשוט.</span></div>
+    <div class="desc">אבל זו התבנית שהפכה אותי מסוחר שמרגיש את הכסף, לסוחר שמבין את עצמו. ויום שהשוק סגור הופך ליום שמקדם אותי הכי הרבה.</div>
+  </div>
+
+  <div class="what-inside">
+    <div class="what-inside-title">מה יש בתבנית</div>
+    <div class="item">
+      <div class="item-dot"></div>
+      <div class="item-text"><b>מטרה ומדידה</b> — מה בדיוק בודקים בסשן הזה, בלי "סתם להרגיש"</div>
+    </div>
+    <div class="item">
+      <div class="item-dot"></div>
+      <div class="item-text"><b>משוב ממוקד</b> — שאלות שחושפות אם עמדת בתוכנית או סטית ממנה</div>
+    </div>
+    <div class="item">
+      <div class="item-dot"></div>
+      <div class="item-text"><b>זיהוי רגש מדויק</b> — לא "הייתי עצבני" אלא מה בדיוק קרה בגוף, כדי שתזהה את זה בפעם הבאה</div>
+    </div>
+    <div class="item">
+      <div class="item-dot"></div>
+      <div class="item-text"><b>מסקנות לפעולה</b> — 2 דברים לשפר, 2 דברים לשמר. כל יום</div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-title">
+      רוצה את התבנית?<br/>
+      <span class="hi">היא בחינם.</span>
+    </div>
+    <div class="cta-sub">
+      תכתוב לי "יומן" בוואטסאפ ואני אשלח לך אותה אישית.<br/>
+      בלי טפסים. בלי מיילים. ישר אליי.
+    </div>
+    <a href="https://wa.me/qr/VDVXCSZXMZAGO1" class="cta-btn">
+      💬 קבל את התבנית בוואטסאפ
+    </a>
+    <div class="cta-note">תוך כמה דקות התבנית תהיה אצלך</div>
+  </div>
+
+  <div class="footer">y.halaly © 2026</div>
+
+</div>
+</body>
+</html>

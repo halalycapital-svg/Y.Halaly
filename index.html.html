@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@y.halaly — סוחר תוך יומי</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0a;
+      min-height: 100vh;
+      font-family: 'Heebo', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px 60px;
+      color: #f0f0f0;
+    }
+
+    /* Ambient glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(232,144,10,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Profile */
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .avatar-wrap {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      padding: 2px;
+      background: linear-gradient(135deg, #e8900a, #f5b942);
+      margin-bottom: 14px;
+    }
+
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 900;
+      color: #e8900a;
+      overflow: hidden;
+    }
+
+    .avatar-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .handle {
+      font-size: 13px;
+      color: #e8900a;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      margin-bottom: 6px;
+    }
+
+    .name {
+      font-size: 22px;
+      font-weight: 900;
+      color: #f0f0f0;
+      margin-bottom: 10px;
+    }
+
+    .bio {
+      font-size: 13px;
+      color: #888;
+      text-align: center;
+      line-height: 1.7;
+      max-width: 300px;
+    }
+
+    .bio span {
+      color: #e8900a;
+      font-weight: 700;
+    }
+
+    /* Divider */
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #e8900a, transparent);
+      margin: 24px auto;
+    }
+
+    /* Section label */
+    .section-label {
+      font-size: 10px;
+      color: #444;
+      letter-spacing: 0.2em;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    /* Link buttons */
+    .link-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #f0f0f0;
+      font-family: 'Heebo', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      transition: all 0.18s ease;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #1e1e1e;
+      background: #111;
+      cursor: pointer;
+    }
+
+    .link-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(232,144,10,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.18s;
+    }
+
+    .link-btn:hover::before { opacity: 1; }
+    .link-btn:hover {
+      border-color: #e8900a;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(232,144,10,0.12);
+    }
+
+    .link-btn:active { transform: translateY(0); }
+
+    .link-btn.primary {
+      background: #e8900a;
+      border-color: #e8900a;
+      color: #000;
+    }
+
+    .link-btn.primary:hover {
+      background: #f5a020;
+      box-shadow: 0 4px 24px rgba(232,144,10,0.35);
+    }
+
+    .link-btn.primary::before { display: none; }
+
+    .btn-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-icon {
+      font-size: 20px;
+      width: 28px;
+      text-align: center;
+    }
+
+    .btn-text { text-align: right; }
+    .btn-title { font-size: 14px; font-weight: 700; display: block; }
+    .btn-sub {
+      font-size: 11px;
+      font-weight: 400;
+      opacity: 0.6;
+      display: block;
+      margin-top: 1px;
+    }
+
+    .link-btn.primary .btn-sub { opacity: 0.7; }
+
+    .arrow {
+      font-size: 16px;
+      opacity: 0.4;
+    }
+
+    .link-btn.primary .arrow { opacity: 0.6; }
+
+    /* Stats bar */
+    .stats {
+      display: flex;
+      gap: 1px;
+      margin-bottom: 24px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #1e1e1e;
+    }
+
+    .stat {
+      flex: 1;
+      padding: 14px 8px;
+      background: #111;
+      text-align: center;
+    }
+
+    .stat:not(:last-child) { border-left: 1px solid #1e1e1e; }
+
+    .stat-num {
+      font-size: 18px;
+      font-weight: 900;
+      color: #e8900a;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: #555;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 11px;
+      color: #2a2a2a;
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Profile -->
+    <div class="profile">
+      <div class="avatar-wrap">
+        <div class="avatar-inner">Y</div>
+      </div>
+      <div class="handle">@y.halaly</div>
+      <div class="name">יניר הללי</div>
+      <div class="bio">
+        סוחר תוך יומי שמדבר <span>בגובה העיניים</span><br />
+        Order Flow · Footprint · פסיכולוגיית מסחר
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-num">6+</span>
+        <span class="stat-label">שנות מסחר</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">ES</span>
+        <span class="stat-label">התמחות</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">500₪</span>
+        <span class="stat-label">מועדון / חודש</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Primary CTA -->
+    <div class="section-label">הצטרף למועדון</div>
+    <a href="#" class="link-btn primary">
+      <div class="btn-left">
+        <span class="btn-icon">🎯</span>
+        <div class="btn-text">
+          <span class="btn-title">מועדון סוחרים — Y.halaly</span>
+          <span class="btn-sub">זום שבועי · וואטסאפ VIP · ניתוחים חיים · 500 ₪/חודש</span>
+        </div>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <div class="divider"></div>
+
+    <!-- Social links -->
+    <div class="section-label">עקוב אחרי</div>
+
+    <a href="https://instagram.com/y.halaly" class="link-btn">
+      <div class="btn-left">
+        <span class="btn-icon">📸</span>
+        <div class="btn-text">
+          <span class="btn-title">אינסטגרם</span>
+          <span class="btn-sub">קרוסלות, רילס, ניתוחים יומיים</span>
+        </div>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <a href="#" class="link-btn">
+      <div class="btn-left">
+        <span class="btn-icon">▶️</span>
+        <div class="btn-text">
+          <span class="btn-title">יוטיוב</span>
+          <span class="btn-sub">סרטונים מעמיקים · ניתוח שוק שבועי</span>
+        </div>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <div class="divider"></div>
+
+    <!-- Contact -->
+    <div class="section-label">צור קשר</div>
+
+    <a href="https://wa.me/qr/VDVXCSZXMZAGO1" class="link-btn">
+      <div class="btn-left">
+        <span class="btn-icon">💬</span>
+        <div class="btn-text">
+          <span class="btn-title">וואטסאפ ישיר</span>
+          <span class="btn-sub">שאלות · ליווי · פרטים על המועדון</span>
+        </div>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <div class="footer">y.halaly © 2025</div>
+  </div>
+</body>
+</html>
