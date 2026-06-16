@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>מועדון הסוחרים — Halaly Trades</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#0a0a0a;
+    color:#f0f0f0;
+    font-family:'Heebo',sans-serif;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:0 0 80px;
+    overflow-x:hidden;
+  }
+
+  /* HERO */
+  .hero {
+    width:100%;
+    padding:80px 20px 70px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    border-bottom:1px solid #1a1a1a;
+  }
+  .hero::before {
+    content:'';
+    position:absolute;
+    top:-150px; left:50%;
+    transform:translateX(-50%);
+    width:600px; height:600px;
+    background:radial-gradient(circle, rgba(232,144,10,0.13) 0%, transparent 65%);
+    pointer-events:none;
+  }
+  .hero-tag {
+    font-size:11px; color:#e8900a;
+    letter-spacing:0.3em; font-weight:700;
+    margin-bottom:28px; position:relative;
+  }
+  .hero h1 {
+    font-size:clamp(28px, 7vw, 48px);
+    font-weight:900;
+    line-height:1.25;
+    margin-bottom:20px;
+    position:relative;
+  }
+  .hero h1 .hi { color:#e8900a; }
+  .hero .lead {
+    font-size:clamp(15px, 3vw, 18px);
+    color:#999;
+    line-height:1.8;
+    max-width:520px;
+    margin:0 auto 36px;
+    position:relative;
+  }
+  .hero .lead .hi { color:#f0f0f0; font-weight:700; }
+
+  /* CONTENT WRAPPER */
+  .wrap {
+    width:100%;
+    max-width:600px;
+    padding:0 20px;
+  }
+
+  /* SECTION */
+  .section { margin:60px 0; }
+  .section-tag {
+    font-size:11px; color:#e8900a;
+    letter-spacing:0.2em; font-weight:700;
+    margin-bottom:14px;
+  }
+  .section h2 {
+    font-size:clamp(22px, 5vw, 30px);
+    font-weight:900;
+    line-height:1.3;
+    margin-bottom:16px;
+  }
+  .section h2 .hi { color:#e8900a; }
+  .section p {
+    font-size:16px;
+    color:#aaa;
+    line-height:1.9;
+    margin-bottom:14px;
+  }
+  .section p .hi { color:#f0f0f0; font-weight:700; }
+  .section p .amber { color:#e8900a; font-weight:700; }
+
+  /* QUOTE */
+  .quote-block {
+    border-right:3px solid #e8900a;
+    padding:16px 20px;
+    background:rgba(232,144,10,0.05);
+    border-radius:0 8px 8px 0;
+    margin:24px 0;
+  }
+  .quote-block p {
+    font-size:17px;
+    font-weight:700;
+    color:#f0f0f0;
+    line-height:1.7;
+    margin:0;
+  }
+  .quote-block p .hi { color:#e8900a; }
+
+  /* INCLUDES */
+  .includes {
+    background:#0e0e0e;
+    border:1px solid #1e1e1e;
+    border-radius:14px;
+    padding:32px 28px;
+    margin:40px 0;
+  }
+  .includes-title {
+    font-size:13px; color:#e8900a;
+    letter-spacing:0.2em; font-weight:700;
+    margin-bottom:22px;
+    text-transform:uppercase;
+  }
+  .include-item {
+    display:flex;
+    gap:14px;
+    padding:14px 0;
+    border-bottom:1px solid #1a1a1a;
+  }
+  .include-item:last-child { border-bottom:none; }
+  .include-icon {
+    font-size:22px;
+    flex-shrink:0;
+    margin-top:2px;
+  }
+  .include-text h3 {
+    font-size:16px;
+    font-weight:800;
+    margin-bottom:4px;
+    color:#f0f0f0;
+  }
+  .include-text p {
+    font-size:13px;
+    color:#777;
+    line-height:1.6;
+    margin:0;
+  }
+
+  /* FOR WHO */
+  .forwhom {
+    margin:40px 0;
+  }
+  .fw-item {
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:14px;
+  }
+  .fw-check {
+    width:20px; height:20px;
+    border-radius:50%;
+    background:rgba(232,144,10,0.15);
+    border:1px solid rgba(232,144,10,0.5);
+    color:#e8900a;
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; font-weight:900;
+    flex-shrink:0; margin-top:2px;
+  }
+  .fw-item p { font-size:15px; color:#ccc; line-height:1.6; margin:0; }
+  .fw-item p b { color:#f0f0f0; }
+
+  /* PRICE */
+  .price-box {
+    background:#0e0e0e;
+    border:1px solid #e8900a;
+    border-radius:14px;
+    padding:36px 28px;
+    text-align:center;
+    margin:40px 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .price-box::before {
+    content:'';
+    position:absolute;
+    top:-60px; left:50%;
+    transform:translateX(-50%);
+    width:300px; height:300px;
+    background:radial-gradient(circle, rgba(232,144,10,0.08) 0%, transparent 70%);
+  }
+  .price-label {
+    font-size:12px; color:#e8900a;
+    letter-spacing:0.2em; font-weight:700;
+    margin-bottom:16px; position:relative;
+  }
+  .price-amount {
+    font-size:56px;
+    font-weight:900;
+    color:#f0f0f0;
+    line-height:1;
+    position:relative;
+  }
+  .price-amount span { font-size:22px; color:#999; }
+  .price-per { font-size:14px; color:#777; margin:6px 0 24px; position:relative; }
+  .price-note { font-size:13px; color:#888; line-height:1.7; position:relative; }
+
+  /* CTA */
+  .cta-section {
+    text-align:center;
+    margin:40px 0;
+  }
+  .cta-section h2 {
+    font-size:clamp(22px, 5vw, 28px);
+    font-weight:900;
+    line-height:1.35;
+    margin-bottom:12px;
+  }
+  .cta-section h2 .hi { color:#e8900a; }
+  .cta-section p {
+    font-size:14px; color:#888;
+    line-height:1.7; margin-bottom:28px;
+  }
+  .cta-btn {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background:#e8900a;
+    color:#000;
+    font-weight:900;
+    font-size:17px;
+    padding:20px 36px;
+    border-radius:10px;
+    text-decoration:none;
+    box-shadow:0 8px 40px rgba(232,144,10,0.3);
+    width:100%;
+    max-width:400px;
+    transition:transform 0.15s;
+  }
+  .cta-btn:active { transform:scale(0.98); }
+  .cta-note { font-size:12px; color:#555; margin-top:14px; }
+
+  /* DIVIDER */
+  .divider {
+    width:50px; height:2px;
+    background:linear-gradient(90deg, transparent, #e8900a, transparent);
+    margin:0 auto;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top:60px;
+    text-align:center;
+    font-size:11px; color:#2a2a2a;
+    letter-spacing:0.1em;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">@y.halaly · HALALY TRADES</div>
+  <h1>
+    את הידע כבר יש לך.<br/>
+    חסר לך <span class="hi">סוחר שעומד לידך.</span>
+  </h1>
+  <p class="lead">
+    כבר ניסית אסטרטגיות. כבר קראת ספרים. כבר צפית בסרטונים.<br/>
+    <span class="hi">אז למה החשבון עדיין לא זז?</span>
+  </p>
+</div>
+
+<div class="wrap">
+
+  <!-- STORY -->
+  <div class="section">
+    <div class="section-tag">הסיפור האמיתי</div>
+    <h2>היה לי <span class="hi">הכל</span> — ועדיין שרפתי את החשבון.</h2>
+    <p>אסטרטגיה טובה. כלים מתקדמים. ידע שרוב הסוחרים לא מכירים. וביום אחד, סשן אחד, הכל עף.</p>
+    <p>לא בגלל שלא ידעתי לסחור. <span class="hi">בגלל שלא ידעתי לנהל את עצמי.</span></p>
+
+    <div class="quote-block">
+      <p>הכלים לא הרגו אותי. <span class="hi">האגו הרג אותי.</span><br/>
+      לקחתי אותו, צבעתי בכחול, וזרקתי לים.</p>
+    </div>
+
+    <p>מאז אני מלמד סוחרים <span class="amber">איך להיות בעצמם הסוחר, לא ללמוד עוד שיטה.</span></p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROBLEM -->
+  <div class="section">
+    <div class="section-tag">מה באמת קורה</div>
+    <h2>הבעיה היא לא <span class="hi">השוק.</span></h2>
+    <p>יש סוחרים שמרוויחים בדיוק באותם תנאים שאתה מפסיד. אותו מכשיר, אותה שעה, אותו נר.</p>
+    <p>ההבדל? <span class="hi">הם לא יושבים ומחכים שיצא להם 4 בקוביה.</span> הם יודעים מה לעשות כשיוצא 1, 2, 3 או 6.</p>
+    <p>רוב מה שמלמדים באינסטגרם וביוטיוב זה אסטרטגיות. ICT, סילבר בולט, כל מיני שיטות שעבדו פעם ואז השוק השתנה. <span class="amber">מי שלמד שיטה בלי להבין אותה נשאר בחוץ.</span></p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SOLUTION -->
+  <div class="section">
+    <div class="section-tag">מה אני מלמד</div>
+    <h2>איך להיות <span class="hi">אתה הסוחר</span><br/>ולא האסטרטגיה.</h2>
+    <p>כשאתה נהיה העסקה, אתה לא יותר מבוט. רק שעלות ההפעלה שלך מאוד יקרה.</p>
+    <p>כשאתה <span class="hi">הסוחר</span>, החופשיות המוחלטת היא בידיים שלך. אתה מחליט. השוק לא מחליט עליך.</p>
+    <p>אני מלמד Order Flow, Footprint, Market Profile. <span class="amber">כלים שמוסדיים משתמשים בהם ואנשים באינסטגרם אפילו לא יודעים שהם קיימים.</span></p>
+    <p>אבל לפני הכלים — הראש. היכולת לשבת מול המסך ולקבל החלטה קרה, בלי שהרגש יכנס לתמונה.</p>
+  </div>
+
+  <!-- INCLUDES -->
+  <div class="includes">
+    <div class="includes-title">מה כלול במועדון</div>
+    <div class="include-item">
+      <div class="include-icon">📊</div>
+      <div class="include-text">
+        <h3>זום שבועי — ניתוח שוק חי</h3>
+        <p>כל שבוע אני פותח את המסך, מראה את הניתוח שלי, מסביר את ההחלטות בזמן אמת.</p>
+      </div>
+    </div>
+    <div class="include-item">
+      <div class="include-icon">💬</div>
+      <div class="include-text">
+        <h3>קבוצת וואטסאפ VIP</h3>
+        <p>גישה ישירה אליי ולקהילה. שאלות, ניתוחים, עסקאות — הכל נדון בזמן אמת.</p>
+      </div>
+    </div>
+    <div class="include-item">
+      <div class="include-icon">🎯</div>
+      <div class="include-text">
+        <h3>ליווי אישי</h3>
+        <p>אני כאן לשמוע. לא לדון, לא לשפוט. עברתי את זה. אעזור לך לעבור את זה גם.</p>
+      </div>
+    </div>
+    <div class="include-item">
+      <div class="include-icon">📚</div>
+      <div class="include-text">
+        <h3>חומרים, תבניות וכלים</h3>
+        <p>תבנית יומן מסחר, מסגרות ניתוח, שאלות שמנחות אותך לפני כל סשן.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOR WHO -->
+  <div class="section">
+    <div class="section-tag">למי זה מתאים</div>
+    <h2>אם אחד מהמשפטים האלה <span class="hi">מדבר עליך:</span></h2>
+    <div class="forwhom">
+      <div class="fw-item">
+        <div class="fw-check">✓</div>
+        <p><b>יש לך ידע</b> אבל אין עקביות בתוצאות</p>
+      </div>
+      <div class="fw-item">
+        <div class="fw-check">✓</div>
+        <p><b>מרוויח ואז מוחק</b> ולא מבין למה זה קורה שוב ושוב</p>
+      </div>
+      <div class="fw-item">
+        <div class="fw-check">✓</div>
+        <p><b>מפסיד בגלל רגש</b> ולא בגלל שהניתוח שלך לא נכון</p>
+      </div>
+      <div class="fw-item">
+        <div class="fw-check">✓</div>
+        <p><b>רוצה לסחור עם כלים מוסדיים</b> ולא עם ציורי נרות</p>
+      </div>
+      <div class="fw-item">
+        <div class="fw-check">✓</div>
+        <p><b>רוצה קהילה אמיתית</b> ולא עוד קבוצת טלגרם עם קריאות פתח לונג</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICE -->
+  <div class="price-box">
+    <div class="price-label">מחיר המועדון</div>
+    <div class="price-amount">500<span>₪</span></div>
+    <div class="price-per">לחודש. ביטול בכל עת.</div>
+    <div class="price-note">
+      לא תשלום על תוכן. תשלום על גישה ישירה לסוחר שכבר עשה את הטעויות שלך.
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>
+      מוכן לגדול<br/>
+      <span class="hi">כסוחר?</span>
+    </h2>
+    <p>תשלח לי הודעה עכשיו. אני עונה אישית לכל אחד.</p>
+    <a href="https://wa.me/972528037222?text=היי יניר, שמעתי על המועדון שלך ועל זה שהוא יכול להביא אותי לרווחיות יציבה סוף סוף. אפשר עוד פרטים?" class="cta-btn">
+      💬 שלח לי הודעה בוואטסאפ
+    </a>
+    <div class="cta-note">אני עונה בדרך כלל תוך שעה</div>
+  </div>
+
+  <div class="footer">y.halaly © 2026 · Halaly Trades</div>
+
+</div>
+</body>
+</html>
