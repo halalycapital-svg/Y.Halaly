@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>שאלות נפוצות — Halaly Trades</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0a0a0a; color:#f0f0f0; font-family:'Heebo',sans-serif; display:flex; flex-direction:column; align-items:center; padding:60px 20px 80px; }
+  .wrap { width:100%; max-width:580px; }
+  .tag { font-size:11px; color:#e8900a; letter-spacing:0.25em; font-weight:700; text-align:center; margin-bottom:20px; }
+  h1 { font-size:clamp(26px,6vw,38px); font-weight:900; text-align:center; line-height:1.3; margin-bottom:12px; }
+  h1 .hi { color:#e8900a; }
+  .sub { font-size:14px; color:#777; text-align:center; line-height:1.7; margin-bottom:50px; }
+  .faq-item { border:1px solid #1e1e1e; border-radius:12px; background:#0e0e0e; margin-bottom:12px; overflow:hidden; }
+  .faq-q { padding:20px 22px; font-size:15px; font-weight:800; color:#f0f0f0; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+  .faq-q .arrow { color:#e8900a; font-size:18px; transition:transform 0.2s; flex-shrink:0; }
+  .faq-a { padding:0 22px 20px; font-size:14px; color:#999; line-height:1.8; display:none; }
+  .faq-a .hi { color:#f0f0f0; font-weight:700; }
+  .faq-a .amber { color:#e8900a; font-weight:700; }
+  .faq-item.open .faq-a { display:block; }
+  .faq-item.open .arrow { transform:rotate(180deg); }
+  .section-label { font-size:11px; color:#444; letter-spacing:0.2em; font-weight:700; text-align:center; margin:36px 0 16px; text-transform:uppercase; }
+  .cta-box { text-align:center; margin-top:50px; background:#0e0e0e; border:1px solid #1e1e1e; border-radius:14px; padding:36px 24px; }
+  .cta-box p { font-size:14px; color:#888; line-height:1.7; margin-bottom:24px; }
+  .cta-btn { display:inline-flex; align-items:center; gap:8px; background:#e8900a; color:#000; font-weight:900; font-size:15px; padding:16px 32px; border-radius:8px; text-decoration:none; width:100%; justify-content:center; }
+  .footer { margin-top:60px; text-align:center; font-size:11px; color:#2a2a2a; letter-spacing:0.1em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tag">@y.halaly · FAQ</div>
+  <h1>שאלות <span class="hi">שכולם שואלים</span></h1>
+  <p class="sub">אם יש לך שאלה שלא מופיעה פה — תשלח לי הודעה ישירה.</p>
+
+  <div class="section-label">על המסחר שלי</div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggle(this)">על איזו שיטת מסחר אתה עובד? <span class="arrow">▾</span></div>
+    <div class="faq-a">אני עובד עם <span class="hi">Order Flow, Footprint Charts ו-Market Profile.</span> בבסיס — תיאוריית מכרזים. אני לא קורא דפוסים על גרף. אני מסתכל על מה שקורה ברמת המיקרו — מי קונה, מי מוכר, ואיפה יש חוסר איזון.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggle(this)">מה אתה סוחר? <span class="arrow">▾</span></div>
+    <div class="faq-a">בעיקר <span class="hi">ES — E-mini S&P 500 של ה-CME.</span> לפעמים זהב ונפט אבל רק בתנאים מאוד ספציפיים. מיקוד הוא המפתח.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggle(this)">מה ה-Win Rate שלך? <span class="arrow">▾</span></div>
+    <div class="faq-a"><span class="hi">68-70%</span> לאורך זמן. זה לא נובע מכך שאני מסחר הרבה. זה נובע מ<span class="amber">בררנות גבוהה</span> — אני ממתין לצירוף הנכון ולא נכנס על כלי בודד.</div>
+  </div>
+
+  <div class="section-label">על המועדון ותוכנית ה-30 יום</div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggle(this)">מה ההבדל בין המועדון לתוכנית 30 יום? <span class="arrow">▾</span></div>
+    <div class="faq-a"><span class="hi">המועדון (500 ₪/חודש)</span> הוא גישה שוטפת — זום שבועי, קבוצת וואטסאפ VIP, ניתוחים חיים. <span class="amber">תוכנית 30 יום (197 ₪)</span> היא תהליך ממוקד — משימה יומית, יומן, ליווי אישי למשך חודש. מי שרוצה להתחיל מאפס — 30 יום. מי שרוצה קהילה שוטפת — המועדון.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggle(this)">אני מתחיל — זה מתאים לי? <span class="arrow">▾</span></div>
+    <div class="faq-a">אם אתה לגמרי בהתחלה — <span class="hi">כדאי קודם ללמוד את הבסיסים.</span> אם כבר ניסית לסחור, יש לך קצת ניסיון אבל אתה לא עקבי — <span class="amber">זה בדיוק בשבילך.</span></div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggle(this)">כמה זמן ביום צריך להשקיע בתוכנית 30 יום? <span class="arrow">▾</span></div>
+    <div class="faq-a">כ-<span class="hi">30-60 דקות ביום.</span> לא יותר. המשימות קצרות וממוקדות. העומק הוא לא בזמן — הוא בכוונה.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggle(this)">האם אתה מלמד את הכלים הטכניים כמו Order Flow? <span class="arrow">▾</span></div>
+    <div class="faq-a">במועדון — כן, יש לזה מקום. בתוכנית 30 יום — <span class="hi">המיקוד הוא על התהליך ועל ניהול הראש,</span> לא על הכלים הטכניים. Order Flow לבד לא יציל אף אחד שלא מכיר את עצמו.</div>
+  </div>
+
+  <div class="section-label">כללי</div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggle(this)">איך אני מצטרף? <span class="arrow">▾</span></div>
+    <div class="faq-a">פשוט. <span class="hi">שולחים לי הודעה בוואטסאפ</span> ואנחנו מסדרים את הכל ביחד. אני עונה אישית לכל אחד.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggle(this)">אתה מבטיח תוצאות? <span class="arrow">▾</span></div>
+    <div class="faq-a">לא. ואף אחד שכנה לא יבטיח לך. <span class="amber">מה שאני מבטיח</span> הוא שאם תעשה את התהליך ברצינות — תצא ממנו עם הכרה של עצמך בתוך השוק שלא היה לך קודם.</div>
+  </div>
+
+  <div class="cta-box">
+    <p>יש לך שאלה שלא מצאת כאן? אני עונה לכל הודעה אישית.</p>
+    <a href="https://wa.me/972528037222?text=היי יניר, יש לי שאלה." class="cta-btn">💬 שלח לי שאלה</a>
+  </div>
+
+  <div class="footer">y.halaly © 2026 · Halaly Trades</div>
+</div>
+<script>
+  function toggle(el) {
+    const item = el.parentElement;
+    item.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

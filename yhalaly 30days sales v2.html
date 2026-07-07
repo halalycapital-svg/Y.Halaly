@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>תוכנית 30 יום — יניר הללי</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0a0a0a; color:#f0f0f0; font-family:'Heebo',sans-serif; display:flex; flex-direction:column; align-items:center; overflow-x:hidden; }
+
+  /* HERO */
+  .hero { width:100%; padding:70px 20px 60px; text-align:center; position:relative; overflow:hidden; border-bottom:1px solid #1a1a1a; }
+  .hero::before { content:''; position:absolute; top:-150px; left:50%; transform:translateX(-50%); width:600px; height:600px; background:radial-gradient(circle, rgba(232,144,10,0.12) 0%, transparent 65%); pointer-events:none; }
+  .hero-tag { font-size:11px; color:#e8900a; letter-spacing:0.3em; font-weight:700; margin-bottom:24px; position:relative; }
+  .hero h1 { font-size:clamp(26px,7vw,46px); font-weight:900; line-height:1.2; margin-bottom:18px; position:relative; }
+  .hero h1 .hi { color:#e8900a; }
+  .hero .sub { font-size:clamp(14px,3vw,17px); color:#888; line-height:1.8; max-width:500px; margin:0 auto; position:relative; }
+
+  /* WRAP */
+  .wrap { width:100%; max-width:620px; padding:0 20px; }
+
+  /* TYPOGRAPHY */
+  .section { margin:60px 0; }
+  .section-tag { font-size:11px; color:#e8900a; letter-spacing:0.2em; font-weight:700; margin-bottom:16px; text-transform:uppercase; }
+  h2 { font-size:clamp(22px,5vw,30px); font-weight:900; line-height:1.3; margin-bottom:18px; }
+  h2 .hi { color:#e8900a; }
+  p { font-size:16px; color:#aaa; line-height:1.95; margin-bottom:16px; }
+  p .hi { color:#f0f0f0; font-weight:700; }
+  p .amber { color:#e8900a; font-weight:700; }
+  p b { color:#f0f0f0; }
+
+  /* QUOTE */
+  .quote { border-right:3px solid #e8900a; padding:18px 20px; background:rgba(232,144,10,0.05); border-radius:0 8px 8px 0; margin:28px 0; }
+  .quote p { font-size:18px; font-weight:800; color:#f0f0f0; line-height:1.6; margin:0; }
+  .quote p .hi { color:#e8900a; }
+
+  /* BIG TEXT */
+  .big-text { font-size:clamp(28px,6vw,42px); font-weight:900; line-height:1.2; margin:32px 0; text-align:center; }
+  .big-text .hi { color:#e8900a; }
+
+  /* DIVIDER */
+  .divider { width:50px; height:2px; background:linear-gradient(90deg,transparent,#e8900a,transparent); margin:50px auto; }
+
+
+  /* MINI CTA */
+  .mini-cta { text-align:center; margin:40px 0; padding:32px 24px; background:rgba(232,144,10,0.05); border:1px solid rgba(232,144,10,0.15); border-radius:12px; }
+  .mini-cta p { font-size:14px; color:#888; margin-bottom:20px; }
+  .mini-cta a { display:inline-flex; align-items:center; gap:8px; background:#e8900a; color:#000; font-weight:900; font-size:15px; padding:16px 32px; border-radius:8px; text-decoration:none; }
+
+  /* TESTIMONY */
+  .testimony-grid { display:flex; flex-direction:column; gap:12px; margin:32px 0; }
+  .testimony { background:#0e0e0e; border:1px solid #1e1e1e; border-radius:12px; padding:20px 18px; position:relative; }
+  .testimony::before { content:'"'; position:absolute; top:10px; right:18px; font-size:48px; color:#e8900a; opacity:0.15; font-family:Georgia,serif; line-height:1; }
+  .testimony p { font-size:14px; color:#ccc; line-height:1.7; margin:0 0 12px; font-style:italic; }
+  .testimony .name { font-size:12px; color:#e8900a; font-weight:800; letter-spacing:0.1em; }
+  .testimony .context { font-size:11px; color:#555; margin-top:3px; }
+
+  /* WEEKS */
+  .weeks { margin:32px 0; }
+  .week { display:flex; gap:16px; margin-bottom:18px; padding-bottom:18px; border-bottom:1px solid #1a1a1a; }
+  .week:last-child { border-bottom:none; }
+  .week-num-circle { width:44px; height:44px; border-radius:50%; background:rgba(232,144,10,0.1); border:1px solid rgba(232,144,10,0.4); color:#e8900a; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:900; flex-shrink:0; margin-top:4px; }
+  .week-content h3 { font-size:17px; font-weight:900; color:#f0f0f0; margin-bottom:6px; }
+  .week-content p { font-size:13px; color:#888; line-height:1.7; margin:0; }
+
+  /* INCLUDES */
+  .includes { background:#0e0e0e; border:1px solid #1e1e1e; border-radius:14px; padding:32px 24px; margin:40px 0; }
+  .includes-title { font-size:12px; color:#e8900a; letter-spacing:0.2em; font-weight:700; margin-bottom:24px; text-transform:uppercase; }
+  .inc-item { display:flex; gap:14px; padding:14px 0; border-bottom:1px solid #1a1a1a; }
+  .inc-item:last-child { border-bottom:none; }
+  .inc-icon { font-size:22px; flex-shrink:0; margin-top:2px; }
+  .inc-text h3 { font-size:15px; font-weight:800; color:#f0f0f0; margin-bottom:5px; }
+  .inc-text p { font-size:13px; color:#777; line-height:1.6; margin:0; }
+
+  /* FOR WHO */
+  .fw-item { display:flex; gap:14px; margin-bottom:14px; align-items:flex-start; }
+  .fw-dot { width:20px; height:20px; border-radius:50%; background:rgba(232,144,10,0.15); border:1px solid rgba(232,144,10,0.5); color:#e8900a; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:900; flex-shrink:0; margin-top:3px; }
+  .fw-item p { font-size:15px; color:#ccc; line-height:1.6; margin:0; }
+
+  /* PRICE */
+  .price-box { background:#0e0e0e; border:1px solid #e8900a; border-radius:14px; padding:40px 28px; text-align:center; margin:40px 0; position:relative; overflow:hidden; }
+  .price-box::before { content:''; position:absolute; top:-60px; left:50%; transform:translateX(-50%); width:300px; height:300px; background:radial-gradient(circle, rgba(232,144,10,0.1) 0%, transparent 70%); }
+  .price-label { font-size:12px; color:#e8900a; letter-spacing:0.2em; font-weight:700; margin-bottom:16px; position:relative; }
+  .price-num { font-size:64px; font-weight:900; line-height:1; position:relative; }
+  .price-num span { font-size:24px; color:#999; }
+  .price-sub { font-size:14px; color:#666; margin:8px 0 28px; position:relative; }
+  .price-note { font-size:14px; color:#888; line-height:1.8; position:relative; }
+
+  /* CTA */
+  .cta-wrap { text-align:center; margin:48px 0; }
+  .cta-wrap h2 { font-size:clamp(22px,5vw,30px); font-weight:900; line-height:1.35; margin-bottom:14px; }
+  .cta-wrap h2 .hi { color:#e8900a; }
+  .cta-wrap .sub { font-size:14px; color:#777; line-height:1.7; margin-bottom:30px; }
+  .cta-btn { display:flex; align-items:center; justify-content:center; gap:10px; background:#e8900a; color:#000; font-weight:900; font-size:17px; padding:22px 36px; border-radius:10px; text-decoration:none; box-shadow:0 10px 40px rgba(232,144,10,0.3); max-width:420px; margin:0 auto; transition:transform 0.15s; }
+  .cta-btn:active { transform:scale(0.98); }
+  .cta-note { font-size:12px; color:#444; margin-top:14px; }
+
+  /* FOOTER */
+  .footer { margin:60px 0 40px; text-align:center; font-size:11px; color:#2a2a2a; letter-spacing:0.1em; }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box { background:rgba(232,144,10,0.05); border:1px solid rgba(232,144,10,0.2); border-radius:12px; padding:24px 22px; margin:28px 0; }
+  .highlight-box p { color:#d0d0d0; margin:0; font-size:15px; line-height:1.9; }
+  .highlight-box p .amber { color:#e8900a; font-weight:700; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">@y.halaly · תוכנית אימון</div>
+  <h1>ישבתי בשוליים<br/>של איילון.<br/><span class="hi">ולא היה לי אוויר.</span></h1>
+  <p class="sub">זה הרגע שבו הכל השתנה. ומה שלמדתי באותו יום שווה יותר מכל קורס שמכרו לך.</p>
+</div>
+
+<div class="wrap">
+
+  <!-- STORY -->
+  <div class="section">
+    <div class="section-tag">הסיפור שמאחורי התוכנית</div>
+    <h2>לפני שאגיד לך מה <span class="hi">התוכנית עושה,</span><br/>אני צריך לספר לך מה קרה לי.</h2>
+    <p>היו לי כלים. היה לי ידע. סחרתי עם שיטות שרוב האנשים לא שמעו עליהן. Order Flow, Footprint, Market Profile. ידעתי לקרוא את השוק בצורה שמשקיעים מוסדיים משתמשים בה.</p>
+    <p>ובכל זאת — <span class="hi">שרפתי את החשבון.</span></p>
+    <p>לא כי לא ידעתי לנתח. כי ביום הלא נכון, במצב הלא נכון, הפכתי להיות חזיר. לקחתי סיכונים שלא הייתי צריך לקחת. הרגשתי את הכסף, לא את התהליך.</p>
+
+    <div class="quote">
+      <p>ישבתי בשוליים של האיילון.<br/>גג פתוח, מזגן מופעל, חלונות פתוחים.<br/><span class="hi">ועדיין לא היה לי אוויר.</span></p>
+    </div>
+
+    <p>בכיתי כמו משוגע. לא ידעתי איך לספר לבת הזוג שאין חתונה באופק. שאין לי שקל על התחת. שנכנסתי לחוב. שאדם שהיה מבלה על סירות ויטס לחול — עכשיו צריך למצוא עבודה.</p>
+    <p>באותו יום, בשוליים של איילון, <span class="amber">החלטתי להתאפס על עצמי.</span></p>
+    <p>כתבתי את "המערכת". עברתי על יותר מ-1,000 עסקאות שלי. כתבתי את האדג' שלי. יצרתי רוטינה וסיסטם שלא קשור בכלל למסחר — אלא לחיים האישיים שלי.</p>
+
+    <div class="highlight-box">
+      <p>לקח לי <span class="amber">שנה להפוך לרווחי.</span> לקח לי 4 שנים להגיע למצב שהמסחר מכלכל אותי ביציבות. <span class="amber">אבל מה שלמדתי באותה שנה ראשונה — זה מה שאני מעביר לך ב-30 יום.</span></p>
+    </div>
+  </div>
+
+  
+  <div class="mini-cta">
+    <p>כבר מזדהה עם הסיפור? אין צורך להמשיך לקרוא.</p>
+    <a href="https://wa.me/972528037222?text=היי יניר, אני רוצה להצטרף לתוכנית האימון של 30 יום. אפשר פרטים?">💬 אני רוצה להצטרף</a>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROBLEM -->
+  <div class="section">
+    <div class="section-tag">הבעיה האמיתית</div>
+    <h2>אתה לא חסר <span class="hi">ידע.</span><br/>אתה חסר <span class="hi">תהליך.</span></h2>
+    <p>אנשים פונים אליי כל יום. מהנדסים. אנשי היי-טק. אנשים שלמדו כלכלה. אנשים חכמים שמבינים שוקי הון. כולם מגיעים עם אותה בעיה:</p>
+    <p><b>"יניר, אני יודע מה לעשות. אני פשוט לא עושה את זה כשאני מול המסך."</b></p>
+    <p>נכנסים במחיר שונה לגמרי ממה שתכננו. לא שומרים על גודל פוזיציה. הסטופ לוס מתנהג מוזר. המערכת יורה מספרים שלא ברורים.</p>
+
+    <div class="quote">
+      <p>הבעיה היא לא השוק.<br/>הבעיה היא לא הכלים.<br/><span class="hi">הבעיה היא מה שקורה בין האוזניים.</span></p>
+    </div>
+
+    <p>ועבדתי גם עם חברות מימון כמו Prop Firms. ושם זה אפילו יותר מסוכן — כי אתה לא מרגיש שאתה מוציא כסף אמיתי. עד שהאיפוס מגיע. יש אנשים שעשו יותר מ-500 מבחנים ועדיין לא הצליחו לעבור. לא כי הם לא יודעים לסחור. <span class="amber">כי הם לא מכירים את עצמם בתוך השוק.</span></p>
+  </div>
+
+
+  <div class="mini-cta">
+    <p>זה נשמע מוכר? המשך לקרוא.</p>
+    <a href="https://wa.me/972528037222?text=היי יניר, אני רוצה להצטרף לתוכנית האימון של 30 יום. אפשר פרטים?">💬 דבר איתי עכשיו</a>
+  </div>
+
+  <!-- TESTIMONIES 1 -->
+  <div class="testimony-grid">
+    <div class="testimony">
+      <p>יניר מה הולך אחי, יש לי בעיה לא ברורה במערכת כבר יומיים. אולי אתה יכול לעזור?</p>
+      <div class="name">סוחר מקהילת זהר ליבוביץ׳</div>
+      <div class="context">פנה אלי ישירות לפתרון בעיה טכנית</div>
+    </div>
+    <div class="testimony">
+      <p>יניר — בפנים הוא אמר לי שאתה יכול לשנות לי את הסיירה מחבילה 11 לחבילה 3 או 5. הבנתי שאתה בנאדם שיודע.</p>
+      <div class="name">סוחר מהקהילה</div>
+      <div class="context">הפניה ישירה לעזרה טכנית — גם זה social proof</div>
+    </div>
+    <div class="testimony">
+      <p>כמו שאמרה לי הבת שלי — "אין עליך ואין מעליך"</p>
+      <div class="name">סוחר ותיק מהקהילה</div>
+      <div class="context">אחרי שעזרתי לו עם בעיה שסחרתי עליה שעות</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SOLUTION -->
+  <div class="section">
+    <div class="section-tag">מה התוכנית עושה</div>
+    <h2>30 יום שבהם אתה <span class="hi">מכיר את עצמך</span><br/>בתוך השוק.</h2>
+    <p>לא עוד שיטה. לא עוד קורס שמוסיף לך ידע שלא תשתמש בו. <span class="hi">תהליך שמלמד אותך לראות את עצמך בזמן אמת.</span></p>
+    <p>מה גורם לך להיכנס לפוזיציה לפני שצריך. מה קורה בגוף שלך כשאתה על ריד. מה הרגש שמביא אותך לדחות את הסטופ. <span class="amber">ולמה ביום טוב אתה סוגר מוקדם מדי.</span></p>
+    <p>זה לא פסיכולוגיה תיאורטית. זה עבודה יומית, ממוקדת, עם יומן ומשימה אחת ביום.</p>
+  </div>
+
+  <!-- WEEKS -->
+  <div class="section">
+    <div class="section-tag">המסלול</div>
+    <h2>4 שבועות. <span class="hi">תהליך אחד.</span></h2>
+    <div class="weeks">
+      <div class="week">
+        <div class="week-num-circle">1</div>
+        <div class="week-content">
+          <h3>לזהות את הדפוסים שלך</h3>
+          <p>לפני שנוגעים בשוק — יושבים. מה גורם לך להיכנס מוקדם? מה גורם לך לצאת מאוחר? שבוע שלם של תצפית על עצמך בלבד.</p>
+        </div>
+      </div>
+      <div class="week">
+        <div class="week-num-circle">2</div>
+        <div class="week-content">
+          <h3>לנתק את התגמול הכספי</h3>
+          <p>המוח שלך למד שפעולה = תגמול מיידי. צד חיה, קיבלת אוכל. עבדת, קיבלת משכורת. קנית מניה... ציפית לכסף. השוק לא עובד ככה. שבוע של עבודה על ניתוק הקשר הזה.</p>
+        </div>
+      </div>
+      <div class="week">
+        <div class="week-num-circle">3</div>
+        <div class="week-content">
+          <h3>לבנות תהליך קבוע</h3>
+          <p>הכנת סשן, ניתוח, כניסה, יציאה, משוב. אותו דבר כל יום. עד שזה לא מחשבה — זה הרגל שלא תוכל לסחור בלעדיו.</p>
+        </div>
+      </div>
+      <div class="week">
+        <div class="week-num-circle">4</div>
+        <div class="week-content">
+          <h3>לסחור עם ראש נקי</h3>
+          <p>חוזרים לכסף אמיתי. אבל עם יומן, עם תהליך, עם 3 שבועות של הכרת עצמך. ביום הזה השוק לא שונה — אתה שונה.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="mini-cta">
+    <p>נשמע לך נכון? אפשר להתחיל כבר השבוע.</p>
+    <a href="https://wa.me/972528037222?text=היי יניר, אני רוצה להצטרף לתוכנית האימון של 30 יום. אפשר פרטים?">💬 איך מצטרפים?</a>
+  </div>
+
+  <!-- INCLUDES -->
+  <div class="includes">
+    <div class="includes-title">מה כלול</div>
+    <div class="inc-item">
+      <div class="inc-icon">📋</div>
+      <div class="inc-text">
+        <h3>30 משימות יומיות</h3>
+        <p>כל יום משימה אחת ממוקדת. לא מעמיסים. לא מבלבלים. דבר אחד שמקדם אותך יום אחד קדימה.</p>
+      </div>
+    </div>
+    <div class="inc-item">
+      <div class="inc-icon">📓</div>
+      <div class="inc-text">
+        <h3>תבנית יומן מסחר — זו שעבדה עליי</h3>
+        <p>6 שלבים. מטרה, מדידה, משוב, רגש, מסקנות, צידה לדרך. אותה תבנית שעזרה לי לעלות חזרה מהתחתית.</p>
+      </div>
+    </div>
+    <div class="inc-item">
+      <div class="inc-icon">💬</div>
+      <div class="inc-text">
+        <h3>גישה ישירה אליי</h3>
+        <p>כל שאלה, כל ספק, כל יום קשה. אני עונה לכל אחד. לא בוט, לא תגובה אוטומטית. אני.</p>
+      </div>
+    </div>
+    <div class="inc-item">
+      <div class="inc-icon">🔄</div>
+      <div class="inc-text">
+        <h3>צ'ק-אין שבועי</h3>
+        <p>בסוף כל שבוע — סיכום קצר ביחד. מה עבד, מה לא, ומה לוקחים לשבוע הבא.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CTA 1 -->
+  <div class="cta-wrap">
+    <h2>נשמע רלוונטי?<br/><span class="hi">המשך לקרוא.</span></h2>
+  </div>
+
+  <!-- FOR WHO -->
+  <div class="section">
+    <div class="section-tag">למי זה מתאים</div>
+    <h2>אם אחד מהמשפטים האלה <span class="hi">מדבר עליך:</span></h2>
+    <div style="margin-top:20px;">
+      <div class="fw-item"><div class="fw-dot">✓</div><p>אתה <b>מרוויח ואז מוחק</b> ולא מצליח להסביר למה</p></div>
+      <div class="fw-item"><div class="fw-dot">✓</div><p>אתה <b>יודע מה לעשות</b> אבל לא עושה את זה ברגע האמת</p></div>
+      <div class="fw-item"><div class="fw-dot">✓</div><p>אתה <b>מרגיש את הכסף</b> בסשן במקום לראות את התהליך</p></div>
+      <div class="fw-item"><div class="fw-dot">✓</div><p>כבר <b>שרפת חשבון אחד</b> לפחות וחזרת לנסות</p></div>
+      <div class="fw-item"><div class="fw-dot">✓</div><p>אתה רוצה <b>עקביות</b>, לא עוד אסטרטגיה חדשה</p></div>
+    </div>
+  </div>
+
+
+  <div class="mini-cta">
+    <p>זה אתה? לא צריך לחשוב יותר.</p>
+    <a href="https://wa.me/972528037222?text=היי יניר, אני רוצה להצטרף לתוכנית האימון של 30 יום. אפשר פרטים?">💬 בואו נדבר</a>
+  </div>
+
+  <!-- TESTIMONIES 2 -->
+  <div class="testimony-grid">
+    <div class="testimony">
+      <p>אהלן יניר, מדבר X מהחוזים העתידיים. הבנתי שאתה תוכל לעזור לי להבין את התהליך. ריפרפתי באתר אבל לא כל-כך הבנתי איך המסחר עם התיק ומתחיל להרוויח — עד עכשיו רק סחרתי על סיירה.</p>
+      <div class="name">סוחר חדש</div>
+      <div class="context">פנה לאחר שראה את הפרופיל — מחפש מישהו שיסביר לו את הדרך</div>
+    </div>
+    <div class="testimony">
+      <p>יניר, רציתי לשאול אותך איך אני מבטל את המגבלה של 500$ ששמנו בסיירה למסחר דמו.</p>
+      <div class="name">סוחר מהקהילה</div>
+      <div class="context">פנייה ישירה בעיה טכנית — אני הכתובת הראשונה</div>
+    </div>
+    <div class="testimony">
+      <p>מה הולך אחי, יש לי בעיה לא ברורה במערכת כבר יומיים, אולי אתה יכול לעזור? נכנסים במרקם לעיסקת שורט והסטופ לוס מתנהג מוזר והמערכת יורה מספרים לא ברורים.</p>
+      <div class="name">סוחר מהקהילה</div>
+      <div class="context">אני הכתובת לפתרון בעיות — גם זה מראה מי אני</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FUTURE VISION -->
+  <div class="section">
+    <div class="section-tag">תדמיין</div>
+    <h2>איך נראים <span class="hi">30 יום מהיום?</span></h2>
+    <p>אתה פותח את המחשב לפני הסשן. לא בהלה, לא אדרנלין. אתה יושב עם הדוח שלך, מסמן את הרמות, מגדיר את הסיכון. <span class="hi">הכל ברור לפני שהשוק נפתח.</span></p>
+    <p>הסשן מסתיים. היית בפוזיציה שלא עבדה. יצאת. לא הזזת סטופ. לא "נתת עוד קצת". <span class="amber">עבדת לפי התוכנית.</span></p>
+    <p>אתה פותח את היומן. כותב מה הרגשת, מה עבד, מה לוקחים לפעם הבאה. לא שיפוט. לא ביקורת עצמית. <span class="hi">למידה.</span></p>
+    <p>בסוף החודש אתה לא מסחר יותר. אתה מסחר <b>אחרת</b>.</p>
+  </div>
+
+  <!-- PRICE -->
+  <div class="price-box">
+    <div class="price-label">השקעה בתוכנית</div>
+    <div class="price-num">197<span> ₪</span></div>
+    <div class="price-sub">תשלום חד פעמי · 30 יום של תהליך אמיתי</div>
+    <div class="price-note">לא קורס שמוכר לך עוד ידע.<br/>תהליך שמלמד אותך להכיר את עצמך בתוך השוק.</div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div class="cta-wrap">
+    <h2>מוכן להתחיל<br/>את <span class="hi">30 הימים שלך?</span></h2>
+    <p class="sub">שלח לי הודעה עכשיו. נדבר קצר ונסגור.</p>
+    <a href="https://wa.me/972528037222?text=היי יניר, אני רוצה להצטרף לתוכנית האימון של 30 יום. אפשר פרטים?" class="cta-btn">
+      💬 אני רוצה להצטרף
+    </a>
+    <div class="cta-note">אני עונה אישית. לא בוט, לא תגובה אוטומטית.</div>
+  </div>
+
+  <div class="footer">y.halaly © 2026 · Halaly Trades</div>
+</div>
+</body>
+</html>

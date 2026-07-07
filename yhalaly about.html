@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>אודות — יניר הללי</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0a0a0a; color:#f0f0f0; font-family:'Heebo',sans-serif; display:flex; flex-direction:column; align-items:center; padding:60px 20px 80px; overflow-x:hidden; }
+  .wrap { width:100%; max-width:580px; }
+  .tag { font-size:11px; color:#e8900a; letter-spacing:0.25em; font-weight:700; text-align:center; margin-bottom:40px; }
+  .hero-name { font-size:clamp(32px,8vw,52px); font-weight:900; text-align:center; line-height:1.2; margin-bottom:10px; }
+  .hero-name .hi { color:#e8900a; }
+  .hero-sub { font-size:14px; color:#666; text-align:center; letter-spacing:0.15em; margin-bottom:50px; }
+  .divider { width:50px; height:2px; background:linear-gradient(90deg,transparent,#e8900a,transparent); margin:0 auto 50px; }
+  .story p { font-size:16px; color:#bbb; line-height:1.95; margin-bottom:20px; }
+  .story p .hi { color:#f0f0f0; font-weight:700; }
+  .story p .amber { color:#e8900a; font-weight:700; }
+  .quote-block { border-right:3px solid #e8900a; padding:18px 20px; background:rgba(232,144,10,0.05); border-radius:0 8px 8px 0; margin:32px 0; }
+  .quote-block p { font-size:17px; font-weight:800; color:#f0f0f0; line-height:1.6; margin:0; }
+  .quote-block p .hi { color:#e8900a; }
+  .stats { display:flex; gap:1px; margin:48px 0; border-radius:12px; overflow:hidden; border:1px solid #1e1e1e; }
+  .stat { flex:1; padding:20px 8px; background:#0e0e0e; text-align:center; }
+  .stat:not(:last-child) { border-left:1px solid #1e1e1e; }
+  .stat-num { font-size:26px; font-weight:900; color:#e8900a; display:block; }
+  .stat-label { font-size:11px; color:#555; font-weight:600; display:block; margin-top:4px; }
+  .tools-title { font-size:11px; color:#e8900a; letter-spacing:0.2em; font-weight:700; margin-bottom:18px; text-align:center; text-transform:uppercase; }
+  .tools-grid { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:50px; }
+  .tool-tag { background:#111; border:1px solid #222; border-radius:20px; padding:7px 16px; font-size:12px; font-weight:700; color:#999; }
+  .cta-box { text-align:center; background:#0e0e0e; border:1px solid #1e1e1e; border-radius:14px; padding:36px 24px; }
+  .cta-box h2 { font-size:22px; font-weight:900; margin-bottom:10px; }
+  .cta-box h2 .hi { color:#e8900a; }
+  .cta-box p { font-size:14px; color:#888; line-height:1.7; margin-bottom:24px; }
+  .cta-btn { display:inline-flex; align-items:center; gap:8px; background:#e8900a; color:#000; font-weight:900; font-size:15px; padding:16px 32px; border-radius:8px; text-decoration:none; width:100%; justify-content:center; }
+  .footer { margin-top:60px; text-align:center; font-size:11px; color:#2a2a2a; letter-spacing:0.1em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tag">@y.halaly · HALALY TRADES</div>
+  <div class="hero-name">יניר <span class="hi">הללי</span></div>
+  <div class="hero-sub">סוחר תוך יומי · ES Futures · Order Flow</div>
+  <div class="divider"></div>
+
+  <div class="story">
+    <p>התחלתי לסחור לפני 6 שנים. לא מתוך תכנון — מתוך סקרנות ותוך כדי שחיפשתי דרך להביא לעצמי חופשיות כלכלית.</p>
+    <p>ביוני של אחת השנים הראשונות, <span class="hi">חשבתי שיש לי אסטרטגיה מנצחת.</span> הייתה לי. היא גם עבדה. אבל אני לא עבדתי. הייתי חזיר. לא ממושמע. בסוף נמחק לי תיק עם 10,000 ₪ שלא הבנתי שאפילו לקחתי כאשראי.</p>
+
+    <div class="quote-block">
+      <p>לקחתי את האגו שלי,<br/><span class="hi">צבעתי אותו בכחול, וזרקתי לים.</span></p>
+    </div>
+
+    <p>אחרי זה הגעתי לזהר ליבוביץ׳. ושם משהו השתנה. לא כי למדתי כלים חדשים. כי <span class="amber">הפסקתי להיות העסקה ועברתי להיות הסוחר.</span></p>
+    <p>4 שנים מתמקד בחוזי ES של ה-CME. כל בוקר — דוח הכנה, מיפוי רמות, תרחישים. <span class="hi">לא נכנס לעסקה בלי צירוף אותות.</span> לא סוחר על כלי בודד.</p>
+    <p>היום אני מסחר ממן את רוב המחיה שלי. אבל יותר חשוב — <span class="amber">אני יודע מי אני כשאני מול המסך.</span> זה מה שאני מלמד.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-num">6+</span>
+      <span class="stat-label">שנות מסחר</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">68-70%</span>
+      <span class="stat-label">Win Rate</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">ES</span>
+      <span class="stat-label">התמחות</span>
+    </div>
+  </div>
+
+  <div class="tools-title">הכלים שאני עובד איתם</div>
+  <div class="tools-grid">
+    <div class="tool-tag">Order Flow</div>
+    <div class="tool-tag">Footprint Charts</div>
+    <div class="tool-tag">Market Profile</div>
+    <div class="tool-tag">Volume Profile</div>
+    <div class="tool-tag">TPO Lines</div>
+    <div class="tool-tag">Wyckoff</div>
+    <div class="tool-tag">Delta Analysis</div>
+    <div class="tool-tag">SierraChart</div>
+  </div>
+
+  <div class="cta-box">
+    <h2>רוצה <span class="hi">ללמוד ממני?</span></h2>
+    <p>יש לי מועדון סוחרים חודשי ותוכנית אימון של 30 יום. תשלח לי הודעה ונדבר.</p>
+    <a href="https://wa.me/972528037222?text=היי יניר, ראיתי את העמוד שלך ורוצה לשמוע עוד על האפשרויות." class="cta-btn">💬 בוא נדבר</a>
+  </div>
+
+  <div class="footer">y.halaly © 2026 · Halaly Trades</div>
+</div>
+</body>
+</html>
