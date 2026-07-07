@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>@y.halaly — סוחר תוך יומי</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght=400;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -70,6 +70,13 @@
       font-weight: 900;
       color: #e8900a;
       overflow: hidden;
+    }
+
+    .avatar-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
     }
 
     .handle {
@@ -254,7 +261,9 @@
     <!-- Profile -->
     <div class="profile">
       <div class="avatar-wrap">
-        <div class="avatar-inner">Y</div>
+        <div class="avatar-inner">
+          <img src="profile.jpg" alt="יניר הללי" />
+        </div>
       </div>
       <div class="handle">@y.halaly</div>
       <div class="name">יניר הללי</div>
@@ -297,21 +306,10 @@
 
     <div class="divider"></div>
 
-    <!-- Products & Social links -->
-    <div class="section-label">תכנים ותבניות</div>
+    <!-- Social links -->
+    <div class="section-label">עקוב אחרי</div>
 
-    <a href="yhalaly_landing_yoman.html" class="link-btn">
-      <div class="btn-left">
-        <span class="btn-icon">📖</span>
-        <div class="btn-text">
-          <span class="btn-title">תבנית יומן מסחר חינמית</span>
-          <span class="btn-sub">השיטה שלי לניתוח עצמי ושיפור עקבי</span>
-        </div>
-      </div>
-      <span class="arrow">←</span>
-    </a>
-
-    <a href="https://instagram.com/y.halaly" target="_blank" class="link-btn">
+    <a href="https://instagram.com/y.halaly" class="link-btn">
       <div class="btn-left">
         <span class="btn-icon">📸</span>
         <div class="btn-text">
@@ -322,12 +320,72 @@
       <span class="arrow">←</span>
     </a>
 
+    <a href="#" class="link-btn">
+      <div class="btn-left">
+        <span class="btn-icon">▶️</span>
+        <div class="btn-text">
+          <span class="btn-title">יוטיוב</span>
+          <span class="btn-sub">סרטונים מעמיקים · ניתוח שוק שבועי</span>
+        </div>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <div class="divider"></div>
+
+    <!-- Products -->
+    <div class="section-label">תוכניות</div>
+
+    <a href="yhalaly_30days_sales_v2.html" class="link-btn">
+      <div class="btn-left">
+        <span class="btn-icon">📋</span>
+        <div class="btn-text">
+          <span class="btn-title">תוכנית אימון 30 יום</span>
+          <span class="btn-sub">תהליך אישי · יומן · ליווי · 197 ₪</span>
+        </div>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <a href="yhalaly_landing_yoman.html" class="link-btn">
+      <div class="btn-left">
+        <span class="btn-icon">📓</span>
+        <div class="btn-text">
+          <span class="btn-title">יומן מסחר — חינם</span>
+          <span class="btn-sub">תבנית שעבדה עליי. שלך בחינם.</span>
+        </div>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <a href="yhalaly_about.html" class="link-btn">
+      <div class="btn-left">
+        <span class="btn-icon">👤</span>
+        <div class="btn-text">
+          <span class="btn-title">אודות</span>
+          <span class="btn-sub">מי אני ואיך הגעתי לכאן</span>
+        </div>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <a href="yhalaly_faq.html" class="link-btn">
+      <div class="btn-left">
+        <span class="btn-icon">❓</span>
+        <div class="btn-text">
+          <span class="btn-title">שאלות נפוצות</span>
+          <span class="btn-sub">כל מה שרצית לדעת</span>
+        </div>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
     <div class="divider"></div>
 
     <!-- Contact -->
     <div class="section-label">צור קשר</div>
 
-    <a href="https://wa.me/qr/VDVXCSZXMZAGO1" target="_blank" class="link-btn">
+    <a href="https://wa.me/qr/VDVXCSZXMZAGO1" class="link-btn">
       <div class="btn-left">
         <span class="btn-icon">💬</span>
         <div class="btn-text">
@@ -338,7 +396,7 @@
       <span class="arrow">←</span>
     </a>
 
-    <div class="footer">y.halaly © 2025</div>
+    <div class="footer">y.halaly © 2026</div>
   </div>
 </body>
 </html>
