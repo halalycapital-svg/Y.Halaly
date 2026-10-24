@@ -1,0 +1,22 @@
+name: BrushAlarm
+options:
+  bundleIdPrefix: com.yhalaly
+  deploymentTarget:
+    iOS: "26.0"
+  developmentLanguage: he
+targets:
+  BrushAlarm:
+    type: application
+    platform: iOS
+    sources: [BrushAlarm]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.yhalaly.brushalarm
+        SWIFT_VERSION: "6.0"
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_CFBundleDisplayName: "צחצוח או כלום"
+        INFOPLIST_KEY_NSCameraUsageDescription: "כדי לכבות את השעון צריך לצלם את עצמך מצחצח שיניים מול המראה."
+        INFOPLIST_KEY_NSAlarmKitUsageDescription: "כדי שהשעון יצלצל גם במצב שקט ויחזור לצלצל עד שתצלם הוכחה."
