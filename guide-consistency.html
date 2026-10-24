@@ -4,209 +4,279 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>חמש הסיבות לחוסר עקביות</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;800&family=Assistant:wght@400;600;700&display=swap">
+<title>5 הסיבות שאתה לא עקבי במסחר | יניר הללי</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=swap">
 <style>
-:root{--bg:#f3f5f4;--fg:#16201c;--muted:#5a6a63;--line:#d3dbd7;--soft:#e7ecea;--accent:#0f7a55;--warn:#b4441f;
---display:"Rubik","Arial Hebrew",Arial,sans-serif;--body:"Assistant","Arial Hebrew",Arial,sans-serif}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1513;--fg:#e6ece9;--muted:#93a39c;--line:#26312d;--soft:#18211e;--accent:#3fc394;--warn:#f08a62;color-scheme:dark}}
-body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:18px;line-height:1.75;margin:0}
-main{max-width:700px;margin:0 auto;padding-block:48px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:44px}
-.eyebrow{font-family:var(--display);font-weight:500;font-size:14px;letter-spacing:.04em;color:var(--accent)}
-h1{font-family:var(--display);font-weight:800;font-size:clamp(32px,7vw,48px);line-height:1.15;margin:8px 0 16px;text-wrap:balance}
-h2{font-family:var(--display);font-weight:800;font-size:clamp(24px,5vw,30px);line-height:1.3;margin:0 0 12px;text-wrap:balance}
-h3{font-family:var(--display);font-weight:500;font-size:20px;margin:24px 0 8px;color:var(--accent)}
-p{margin:0 0 14px}
-ul,ol{margin:0 0 14px;padding-inline-start:22px}
-li{margin-bottom:6px}
-.lead{font-size:20px;color:var(--muted)}
-.toc{background:var(--soft);border-radius:6px;padding:20px 24px}
-.toc a{color:var(--fg)}
-.chap{border-top:1px solid var(--line);padding-top:32px}
-.num{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.06em;color:var(--accent);display:block;margin-bottom:6px}
-.story{border-inline-start:3px solid var(--warn);padding-inline-start:14px;color:var(--muted);font-style:italic}
-.task{background:var(--soft);border-radius:6px;padding:18px 20px;margin-top:18px}
-.task b:first-child{font-family:var(--display);font-weight:500;color:var(--accent);display:block;margin-bottom:6px}
-.tpl{border:1px dashed var(--line);border-radius:6px;padding:16px 20px;font-size:16px}
-.tpl div{padding:6px 0;border-bottom:1px solid var(--line)}
+:root{--bg:#0a0a0a;--card:#121212;--line:#1f1f1f;--fg:#f0f0f0;--muted:#a3a3a3;--amber:#e8900a;--amberSoft:rgba(232,144,10,.07);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:'Heebo',Arial,sans-serif;line-height:1.85;font-size:17px;padding-bottom:84px}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.hero{padding-block:64px 40px;text-align:center;border-bottom:1px solid var(--line);background:radial-gradient(circle at 50% -20%,rgba(232,144,10,.16),transparent 60%)}
+.tag{font-size:12px;color:var(--amber);letter-spacing:.2em;font-weight:700}
+h1{font-size:clamp(30px,8vw,50px);font-weight:900;line-height:1.15;margin:16px 0;text-wrap:balance}
+h2{font-size:clamp(24px,6vw,32px);font-weight:900;line-height:1.25;margin:0 0 16px;text-wrap:balance}
+h3{font-size:19px;font-weight:800;margin:28px 0 8px;color:var(--amber)}
+.hi{color:var(--amber)}
+p{margin:0 0 16px;color:var(--muted)}
+p b,li b{color:var(--fg)}
+ul,ol{color:var(--muted);padding-inline-start:22px;margin:0 0 16px}
+li{margin-bottom:8px}
+.sub{font-size:18px;max-width:520px;margin:0 auto}
+section{padding-block:48px;border-bottom:1px solid var(--line)}
+.num{font-size:13px;font-weight:800;letter-spacing:.2em;color:var(--amber);display:block;margin-bottom:8px}
+.mirror{background:var(--amberSoft);border-right:3px solid var(--amber);padding:16px 18px;border-radius:0 8px 8px 0;margin:24px 0}
+.mirror p{color:var(--fg);font-weight:700;font-size:18px;margin:0 0 6px;line-height:1.6}
+.mirror p:last-child{margin:0}
+.big{font-size:clamp(24px,6vw,34px);font-weight:900;line-height:1.25;text-align:center;margin:32px 0;color:var(--fg)}
+.task{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-top:24px}
+.task strong{display:block;color:var(--amber);margin-bottom:6px}
+.task p{margin:0}
+.cta{text-align:center;margin:32px 0 0;padding:28px 22px;background:var(--amberSoft);border:1px solid rgba(232,144,10,.25);border-radius:12px}
+.cta p{color:var(--fg);font-weight:700;font-size:18px;margin-bottom:16px}
+.cta small{display:block;color:var(--muted);margin-top:12px;font-size:14px}
+.btn{display:inline-block;background:var(--amber);color:#0a0a0a;font-weight:900;font-size:17px;padding:14px 26px;border-radius:999px;text-decoration:none}
+.btn:focus-visible{outline:3px solid var(--fg);outline-offset:3px}
+.btn.ghost{background:transparent;color:var(--amber);border:2px solid var(--amber)}
+.quiz label{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer;color:var(--fg)}
+.quiz input{margin-top:8px;accent-color:var(--amber);width:19px;height:19px;flex-shrink:0}
+#result{margin-top:20px;padding:18px;border-radius:10px;background:var(--card);border:1px solid var(--line)}
+#result b{color:var(--amber);font-size:20px}
+.tpl{background:var(--card);border:1px dashed #333;border-radius:10px;padding:8px 18px}
+.tpl div{padding:10px 0;border-bottom:1px solid var(--line);color:var(--muted)}
 .tpl div:last-child{border:0}
-.quiz label{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer}
-.quiz input{margin-top:7px;accent-color:var(--accent);width:18px;height:18px;flex-shrink:0}
-#score{font-family:var(--display);font-weight:500;margin-top:14px;color:var(--accent)}
-.cta{border:2px solid var(--accent);border-radius:6px;padding:28px 24px}
-.cta h2{color:var(--accent)}
-.disc{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
-a{color:var(--accent)}
+.tpl b{color:var(--fg)}
+.ladder{display:grid;gap:14px}
+.offer{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+.offer.main{border-color:var(--amber)}
+.offer h4{margin:0 0 4px;font-size:20px;font-weight:900}
+.offer .price{color:var(--amber);font-weight:900;font-size:22px}
+.offer p{margin:8px 0 14px}
+.disc{font-size:13px;color:#6b6b6b;padding-block:32px}
+.bar{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,10,.96);border-top:1px solid #2a2a2a;padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;z-index:5}
+.bar span{color:var(--fg);font-weight:700;font-size:15px}
+.bar .btn{padding:10px 20px;font-size:15px}
+@media (prefers-reduced-motion:no-preference){.btn{transition:transform .15s}.btn:hover{transform:translateY(-2px)}}
 </style>
 </head>
 <body>
-<main>
 
-<header>
-<div class="eyebrow">מדריך חינמי · מאת יניר, @Y.HALALY</div>
-<h1>5 הסיבות שאתה לא עקבי במסחר</h1>
-<p class="lead">ומה עושים עם כל אחת מהן, כבר מהיום הבא.</p>
-<p>אתה רואה את הפוטנציאל של השוק. יש לך ימים מעולים, לפעמים שבוע שלם. ואז מגיע יום אחד שמחזיר הכל, ולפעמים יותר.</p>
-<p>אני סוחר חוזים עתידיים כבר שש שנים, ארבע מהן בעיקר על ES ו-MES. עברתי את כל הטעויות שתקרא עליהן כאן. אחרי מאות עסקאות ביומן, הגעתי למסקנה אחת: <b>הבעיה כמעט אף פעם לא בסטאפ. היא במה שקורה סביבו.</b></p>
-<p>המדריך הזה לא ילמד אותך אינדיקטור חדש. הוא יראה לך איפה הכסף שלך באמת דולף, וייתן לך כלים לסגור את הדליפה. תקרא לאט, ותעשה את התרגילים. מי שרק קורא, לא משתנה.</p>
-</header>
+<header class="hero"><div class="wrap">
+<div class="tag">מדריך חינמי · יניר הללי · @Y.HALALY</div>
+<h1>5 הסיבות שאתה <span class="hi">לא עקבי</span> במסחר</h1>
+<p class="sub">ולמה זה בכלל לא קשור לסטאפ שלך.</p>
+</div></header>
+
+<main class="wrap">
+
+<section>
+<p>בוא נדבר רגע בכנות.</p>
+<div class="mirror">
+<p>יש לך שבוע מעולה. אתה מרגיש שסוף סוף פיצחת את זה.</p>
+<p>ואז מגיע יום אחד. ובסוף היום הזה, השבוע נעלם.</p>
+</div>
+<p>אם הרגע הנהנת עם הראש, תמשיך לקרוא. כי אני מכיר את היום הזה מקרוב. הייתי שם, הרבה פעמים.</p>
+<p>אני סוחר חוזים עתידיים כבר שש שנים, ארבע מהן בעיקר על ES. לקח לי שנה להפוך לרווחי, ועוד כמה שנים להגיע ליציבות. ובדרך גיליתי משהו שאף אחד לא אמר לי בהתחלה:</p>
+<p class="big">הבעיה שלך היא לא <span class="hi">הסטאפ.</span><br>היא מה שקורה <span class="hi">סביבו.</span></p>
+<p>המדריך הזה הולך להראות לך בדיוק איפה הכסף שלך דולף. חלק מהדברים יכאבו. זה בסדר. מה שכואב, זה מה שאתה צריך לתקן.</p>
+</section>
 
 <section class="quiz">
-<h2>לפני שמתחילים: אבחון של 60 שניות</h2>
-<p>סמן כל משפט שנכון לגביך. בלי לייפות.</p>
-<label><input type="checkbox">אין לי מסמך כתוב שמגדיר בדיוק מתי אני נכנס לעסקה</label>
-<label><input type="checkbox">אני סוחר באותה צורה בימי מגמה ובימי דשדוש</label>
-<label><input type="checkbox">אחרי הפסד, קרה לי להגדיל כמות או להיכנס מהר כדי "להחזיר"</label>
-<label><input type="checkbox">אין לי גבול הפסד יומי, או שיש אבל עברתי אותו</label>
-<label><input type="checkbox">אני לא מתעד כל עסקה ביומן</label>
-<label><input type="checkbox">אני לא יודע מה אחוז ההצלחה האמיתי שלי</label>
-<label><input type="checkbox">ביום משעמם אני מחפש עסקאות כדי "לעשות משהו"</label>
-<label><input type="checkbox">היו לי ימים שבהם עשיתי יותר מ-10 עסקאות</label>
-<p id="score">סימנת 0 מתוך 8</p>
-<p>2 או פחות: אתה בכיוון, המדריך יחדד אותך. 3 עד 5: יש לך דליפה ממשית, והיא מוסברת כאן. 6 ומעלה: אל תסחור מחר לפני שקראת עד הסוף.</p>
+<span class="num">אבחון · 60 שניות</span>
+<h2>סמן כל משפט שנכון לגביך. <span class="hi">בלי לייפות.</span></h2>
+<label><input type="checkbox" id="q1">אין לי מסמך כתוב שמגדיר בדיוק מתי אני נכנס לעסקה</label>
+<label><input type="checkbox" id="q2">אני סוחר באותה צורה בימי מגמה ובימי דשדוש</label>
+<label><input type="checkbox" id="q3">אחרי הפסד, הגדלתי כמות או נכנסתי מהר כדי "להחזיר"</label>
+<label><input type="checkbox" id="q4">אין לי גבול הפסד יומי, או שיש ועברתי אותו</label>
+<label><input type="checkbox" id="q5">אני לא מתעד כל עסקה ביומן</label>
+<label><input type="checkbox" id="q6">אני לא יודע מה אחוז ההצלחה האמיתי שלי</label>
+<label><input type="checkbox" id="q7">ביום משעמם אני מחפש עסקאות רק כדי "לעשות משהו"</label>
+<label><input type="checkbox" id="q8">הזזתי סטופ, כי "זה עוד רגע מסתובב"</label>
+<div id="result"><b>0 מתוך 8</b><p style="margin:6px 0 0">תסמן, ותראה איפה אתה עומד.</p></div>
 </section>
 
-<nav class="toc">
-<b>מה במדריך</b>
-<ol>
-<li><a href="#c1">אין לך הגדרה כתובה למה זה עסקה</a></li>
-<li><a href="#c2">אתה סוחר בכל סוג של יום</a></li>
-<li><a href="#c3">הסיכון שלך גדל אחרי הפסד</a></li>
-<li><a href="#c4">אתה לא מנהל יומן</a></li>
-<li><a href="#c5">אתה רודף אחרי כמות במקום איכות</a></li>
-<li><a href="#plan">בונוס: תבנית תוכנית מסחר בעמוד אחד</a></li>
-</ol>
-</nav>
-
-<section class="chap" id="c1">
+<section id="c1">
 <span class="num">סיבה 1</span>
-<h2>אין לך הגדרה כתובה למה זה עסקה</h2>
-<p>תשאל סוחר מה הסטאפ שלו, ותשמע משהו כמו "אני נכנס כשהמחיר מגיע לרמה חשובה ויש אישור". זה נשמע מקצועי. זה לא שיטה.</p>
-<p>מה זו רמה חשובה? מה זה אישור? אם התשובה משתנה לפי מצב הרוח, אין לך שיטה. יש לך תחושות. ותחושות מושפעות מהעסקה האחרונה, מהשינה של אתמול ומהחשבון שירד.</p>
-<p class="story">סוחר שליוויתי היה משוכנע שהבעיה שלו בניתוח. כשביקשתי ממנו לכתוב את הכללים שלו, גילינו שהוא סוחר שלושה סטאפים שונים, ושרק אחד מהם הרוויח. השניים האחרים מחקו את כל הרווח.</p>
-<h3>למה זה הורס עקביות</h3>
-<p>בלי כללים כתובים, אי אפשר למדוד. ומה שלא נמדד, לא משתפר. אתה לא יודע אם הפסדת כי השיטה לא עובדת, או כי לא עבדת לפי השיטה. אלה שתי בעיות שונות לגמרי, עם פתרונות שונים לגמרי.</p>
-<h3>איך נראה סטאפ כתוב נכון</h3>
-<ul>
-<li><b>הקשר:</b> באיזה מצב שוק הסטאפ הזה תקף? (למשל: פתיחה מחוץ לאזור הערך של אתמול)</li>
+<h2>אין לך הגדרה כתובה למה זה <span class="hi">עסקה</span></h2>
+<p>תשאל סוחר מה הסטאפ שלו. תשמע משהו כמו "אני נכנס כשהמחיר מגיע לרמה חשובה ויש אישור".</p>
+<p>נשמע מקצועי. זה לא שיטה.</p>
+<div class="mirror">
+<p>מה זו רמה חשובה? מה זה אישור?</p>
+<p>אם התשובה שלך משתנה לפי מצב הרוח של הבוקר, אין לך שיטה. יש לך תחושות.</p>
+</div>
+<p>ותחושות מושפעות מהכל: מהעסקה האחרונה, מכמה ישנת, ממה שהחשבון עשה אתמול. ככה אתה מקבל ימים מעולים וימים הרסניים, עם <b>אותו</b> ידע ואותו גרף.</p>
+<h3>למה זה הורג עקביות</h3>
+<p>בלי כללים כתובים, אתה לא יכול לדעת אם הפסדת כי השיטה לא עובדת, או כי לא עבדת לפי השיטה. אלה שתי בעיות שונות לגמרי. ואתה מנסה לתקן את שתיהן בעיניים עצומות.</p>
+<h3>סטאפ כתוב נכון = 5 שורות</h3>
+<ol>
+<li><b>הקשר:</b> באיזה מצב שוק הסטאפ תקף? (למשל: פתיחה מחוץ לאזור הערך של אתמול)</li>
 <li><b>מיקום:</b> איפה בדיוק? (למשל: חזרה לגבול אזור הערך, VAH או VAL)</li>
-<li><b>טריגר:</b> מה גורם לי ללחוץ? (למשל: דחייה ברורה עם ספיגה בפוטפרינט)</li>
-<li><b>סטופ:</b> איפה הרעיון שלי פשוט שגוי?</li>
+<li><b>טריגר:</b> מה גורם לך ללחוץ? (למשל: ספיגה ברורה בפוטפרינט)</li>
+<li><b>סטופ:</b> איפה הרעיון שלך פשוט שגוי?</li>
 <li><b>יעד:</b> לאן ההיגיון אומר שהמחיר צריך להגיע? (למשל: ה-POC)</li>
-</ul>
-<p>אם אתה לא יכול לכתוב את חמש השורות האלה, אתה לא צריך עוד אסטרטגיה. אתה צריך לכתוב את זו שיש לך.</p>
-<div class="task"><b>התרגיל</b>בחר את הסטאפ אחד שאתה הכי סומך עליו. כתוב אותו בחמש השורות למעלה. במשך 20 העסקאות הבאות, אתה סוחר רק אותו. כל עסקה שלא עומדת בכל החמישה, לא קיימת. אחרי 20 עסקאות תהיה לך לראשונה נתון אמיתי על השיטה שלך.</div>
+</ol>
+<div class="task"><strong>התרגיל שלך</strong><p>כתוב עכשיו את הסטאפ שאתה הכי סומך עליו, בחמש השורות. ב-20 העסקאות הבאות, רק אותו. עסקה שלא עומדת בכל החמישה, לא קיימת.</p></div>
+<div class="cta">
+<p>לכתוב 5 שורות זה קל. לעמוד בהן מול המסך, כשהמחיר בורח בלעדיך, זה הסיפור האמיתי.</p>
+<a class="btn" href="yhalaly_30days_sales_v2.html">ב-30 יום נבנה את זה יחד ←</a>
+<small>תוכנית אימון אישית · 197 ₪</small>
+</div>
 </section>
 
-<section class="chap" id="c2">
+<section id="c2">
 <span class="num">סיבה 2</span>
-<h2>אתה סוחר בכל סוג של יום</h2>
-<p>זו הטעות שאני רואה הכי הרבה אצל סוחרים טובים. לא אצל מתחילים, אצל טובים.</p>
-<p>השוק הוא מכרז. בכל רגע הוא מחפש מחיר שבו קונים ומוכרים מסכימים לעשות עסקים. יש ימים שבהם הוא מקבל את הערך של אתמול ומסתובב בתוכו. ויש ימים שבהם הוא דוחה אותו ויוצא לחפש ערך חדש. <b>אלה שני ימים שדורשים התנהגות הפוכה.</b></p>
+<h2>אתה סוחר <span class="hi">כל סוג</span> של יום</h2>
+<p>את הטעות הזו אני רואה דווקא אצל סוחרים טובים. לא אצל מתחילים.</p>
+<p>השוק הוא מכרז. בכל רגע הוא מחפש מחיר שבו קונים ומוכרים מסכימים לעשות עסקים. יש ימים שבהם הוא <b>מקבל</b> את הערך של אתמול ומסתובב בתוכו. ויש ימים שבהם הוא <b>דוחה</b> אותו ויוצא לחפש ערך חדש.</p>
+<p class="big">אלה שני ימים שדורשים<br><span class="hi">התנהגות הפוכה.</span></p>
 <ul>
-<li><b>ביום של איזון (טווח):</b> קונים בתחתית הטווח, מוכרים בראש שלו, ולוקחים רווח באמצע. מי שמחכה לפריצות, נשחט.</li>
-<li><b>ביום של מגמה:</b> לא מוכרים "כי זה עלה מדי". נכנסים עם הכיוון, בתיקונים. מי שמחפש היפוכים, נשחט.</li>
+<li><b>יום איזון:</b> קונים בתחתית, מוכרים בראש, לוקחים רווח באמצע. מי שמחכה לפריצה, נשחט.</li>
+<li><b>יום מגמה:</b> לא מוכרים "כי זה עלה מדי". נכנסים עם הכיוון, בתיקונים. מי שמחפש היפוך, נשחט.</li>
 </ul>
-<p>עכשיו תבין למה אתה מרוויח שלושה ימים ומחזיר ביום הרביעי. השיטה שלך לא גרועה. היא פשוט מתאימה לסוג אחד של יום, ואתה מפעיל אותה בכולם.</p>
-<h3>איך מזהים מה סוג היום</h3>
+<div class="mirror">
+<p>שלושה ימים אתה מרוויח. ביום הרביעי אתה מחזיר הכל.</p>
+<p>השיטה שלך לא גרועה. היא פשוט מתאימה ליום אחד, ואתה מפעיל אותה בכולם.</p>
+</div>
+<h3>3 שאלות שמזהות את היום</h3>
 <ol>
 <li>איפה נפתח השוק ביחס לאזור הערך של אתמול? בפנים, או בחוץ?</li>
-<li>אם בחוץ: האם המחיר חוזר פנימה בשעה הראשונה, או מקבל את המחיר החדש ובונה שם נפח?</li>
-<li>האם טווח השעה הראשונה (IB) נשבר לצד אחד ונשאר שם, או נבדק משני הצדדים?</li>
+<li>אם בחוץ: המחיר חוזר פנימה בשעה הראשונה, או בונה נפח במחיר החדש?</li>
+<li>טווח השעה הראשונה (IB) נשבר לצד אחד ונשאר שם, או נבדק משני הצדדים?</li>
 </ol>
-<p>שלוש שאלות, וכבר יש לך כיוון. אתה לא צריך לנחש את העתיד. אתה צריך לזהות מה השוק עושה עכשיו, ולהתאים את עצמך.</p>
-<div class="task"><b>התרגיל</b>במשך שבוע, לפני כל עסקה, כתוב מילה אחת: "איזון" או "מגמה". בסוף השבוע, חלק את העסקאות לשתי קבוצות ותבדוק איפה הרווחת ואיפה הפסדת. רוב הסוחרים מגלים שכמעט כל ההפסדים שלהם מגיעים מסוג אחד של יום.</div>
+<div class="task"><strong>התרגיל שלך</strong><p>שבוע אחד. לפני כל עסקה, מילה אחת ביומן: "איזון" או "מגמה". בסוף השבוע תחלק את העסקאות. כמעט כל סוחר מגלה שרוב ההפסדים שלו מגיעים מסוג יום אחד.</p></div>
 </section>
 
-<section class="chap" id="c3">
-<span class="num">סיבה 3</span>
-<h2>הסיכון שלך גדל אחרי הפסד</h2>
-<p>זו הסיבה שעולה הכי הרבה כסף. לא ההפסד הראשון. מה שבא אחריו.</p>
-<p class="story">הפסד בבוקר. "אני רק אחזיר את זה". עוד עסקה, הפעם עם שני חוזים. עוד הפסד. עכשיו זה אישי. שלושה חוזים, בלי סטופ אמיתי, "זה חייב להסתובב". בסוף היום, חודש של עבודה נעלם.</p>
-<p>אם זה נשמע מוכר, אתה לא לבד. כמעט כל סוחר שאני מכיר עבר את היום הזה. ההבדל בין מי ששורד למי שלא, הוא לא כישרון. זה כללים שנקבעו מראש, כשהראש היה קר.</p>
+<section id="c3">
+<span class="num">סיבה 3 · הכי יקרה</span>
+<h2>הסיכון שלך <span class="hi">גדל</span> אחרי הפסד</h2>
+<p>זו לא הסיבה הכי נפוצה. זו הסיבה הכי יקרה.</p>
+<div class="mirror">
+<p>הפסד בבוקר. "אני רק אחזיר את זה".</p>
+<p>עוד עסקה, הפעם שני חוזים. עוד הפסד. עכשיו זה אישי.</p>
+<p>שלושה חוזים. הסטופ זז. "זה חייב להסתובב".</p>
+<p>בסוף היום, חודש של עבודה נעלם.</p>
+</div>
+<p>אם הלב שלך דפק קצת חזק כשקראת את זה, אתה לא לבד. כמעט כל סוחר שאני מכיר עבר את היום הזה. ההבדל בין מי ששורד למי שלא, הוא לא כישרון. זה <b>כללים שנקבעו כשהראש היה קר.</b></p>
 <h3>למה זה קורה</h3>
-<p>אחרי הפסד, המוח מפסיק לחשוב על השוק ומתחיל לחשוב על עצמו. המטרה משתנה מ"לבצע עסקה טובה" ל"להוכיח שאני צודק" או "לחזור לאפס". זה אגו, ובעולם המסחר יש הרבה ממנו. השוק לא יודע שהפסדת, ולא חייב לך כלום.</p>
-<h3>שלושה כללים שעוצרים את זה</h3>
+<p>אחרי הפסד, המוח מפסיק לחשוב על השוק ומתחיל לחשוב על עצמו. המטרה עוברת מ"עסקה טובה" ל"להוכיח שאני צודק". זה אגו. ובעולם המסחר יש ממנו המון. השוק לא יודע שהפסדת, והוא לא חייב לך כלום.</p>
+<h3>3 כללים שעוצרים את זה</h3>
 <ol>
-<li><b>גבול הפסד יומי:</b> סכום קבוע, שנקבע מראש. נגעת בו, סוגרים את הפלטפורמה. לא "עוד אחת אחרונה".</li>
-<li><b>אותה כמות תמיד:</b> גודל הפוזיציה נקבע לפי השיטה, לא לפי מה שקרה בעסקה הקודמת. אסור להגדיל אחרי הפסד. אף פעם.</li>
-<li><b>הפסקה חובה:</b> אחרי שני הפסדים ברצף, 15 דקות מחוץ למסך. קום, תשתה מים, תחזור עם ראש נקי, או אל תחזור.</li>
+<li><b>גבול הפסד יומי.</b> סכום קבוע. נגעת בו, סוגרים את הפלטפורמה. לא "עוד אחת אחרונה".</li>
+<li><b>כמות קבועה.</b> אסור להגדיל אחרי הפסד. אף פעם. בלי יוצאים מן הכלל.</li>
+<li><b>הפסקה חובה.</b> שני הפסדים ברצף, 15 דקות רחוק מהמסך.</li>
 </ol>
-<div class="task"><b>התרגיל</b>כתוב עכשיו, לפני היום הבא במסחר: מה גבול ההפסד היומי שלך בשקלים, מה הכמות הקבועה שלך, ומה אתה עושה אחרי שני הפסדים. תדביק את זה על המסך. ברגע של לחץ, אתה לא תזכור. אתה צריך לראות.</div>
+<div class="task"><strong>התרגיל שלך</strong><p>כתוב עכשיו: גבול ההפסד היומי שלך בשקלים, הכמות הקבועה שלך, ומה אתה עושה אחרי שני הפסדים. תדביק על המסך. ברגע של לחץ אתה לא תזכור. אתה צריך לראות.</p></div>
+<div class="cta">
+<p>הכללים האלה עובדים רק אם מישהו בודק שאתה עומד בהם. לבד, ביום הקשה, אתה תמצא סיבה לשבור אותם.</p>
+<a class="btn" href="yhalaly_30days_sales_v2.html">אני רוצה מישהו שמחזיק אותי ←</a>
+<small>תוכנית 30 יום · ליווי אישי · 197 ₪</small>
+</div>
 </section>
 
-<section class="chap" id="c4">
+<section id="c4">
 <span class="num">סיבה 4</span>
-<h2>אתה לא מנהל יומן</h2>
-<p>אתה זוכר את העסקה המטורפת מלפני שבועיים. אתה לא זוכר את שבע הטעויות הקטנות שעשית מאז, כי הן היו "רק קטנות". אבל שבע טעויות קטנות הן הדליפה שמשאירה אותך במקום.</p>
-<p>בלי יומן, אתה מנהל עסק בלי הנהלת חשבונות. אתה מרגיש שאתה מרוויח, אבל אין לך מושג מאיפה הכסף מגיע ולאן הוא הולך.</p>
+<h2>אתה <span class="hi">לא מנהל יומן</span></h2>
+<div class="mirror">
+<p>את העסקה המטורפת מלפני שבועיים, אתה זוכר בעל פה.</p>
+<p>את שבע הטעויות הקטנות מאז, כבר שכחת.</p>
+</div>
+<p>אבל שבע טעויות קטנות הן בדיוק הדליפה שמשאירה אותך באותו מקום, חודש אחרי חודש. בלי יומן, אתה מנהל עסק בלי הנהלת חשבונות. מרגיש שאתה מרוויח, ואין לך מושג מאיפה הכסף בא ולאן הוא הולך.</p>
 <h3>מה יומן נותן לך</h3>
 <ul>
-<li>אחוז ההצלחה האמיתי שלך, ולא מה שנדמה לך</li>
-<li>באיזה שעות ביום אתה הכי טוב, ובאיזה הכי גרוע</li>
-<li>איזה סטאפ מרוויח, ואיזה רק נראה טוב</li>
-<li>הטעות שחוזרת אצלך שוב ושוב, בשם ובמספר</li>
+<li>את אחוז ההצלחה האמיתי שלך, לא מה שנדמה לך</li>
+<li>באיזה שעות אתה הכי חד, ובאיזה אתה סתם שורף כסף</li>
+<li>איזה סטאפ מרוויח באמת, ואיזה רק נראה טוב</li>
+<li>הטעות שחוזרת אצלך, בשם ובמספר</li>
 </ul>
-<p>אני מגיע לאחוז הצלחה של בערך 68 עד 70 אחוז, ואני לא הייתי יודע את זה בלי יומן. וחשוב מזה, לא הייתי יודע מה לחתוך כדי להגיע לשם.</p>
-<h3>תבנית יומן פשוטה, אחרי כל עסקה</h3>
+<p>אני שומר על אחוז הצלחה של 68 עד 70 אחוז. לא בזכות סטאפ סודי. בזכות זה שהיומן הראה לי מה לחתוך.</p>
+<h3>7 שורות אחרי כל עסקה</h3>
 <div class="tpl">
-<div><b>תאריך, שעה, נכס:</b></div>
+<div><b>תאריך, שעה, נכס</b></div>
 <div><b>סוג היום:</b> איזון / מגמה</div>
 <div><b>הסטאפ:</b> לפי איזה כלל נכנסתי?</div>
-<div><b>עמדתי בכללים?</b> כן / לא, ואם לא, מה שברתי?</div>
-<div><b>תוצאה:</b> בנקודות ובשקלים</div>
+<div><b>עמדתי בכללים?</b> ואם לא, מה שברתי?</div>
+<div><b>תוצאה:</b> נקודות ושקלים</div>
 <div><b>מה הרגשתי לפני הכניסה:</b> רגוע / לחוץ / משועמם / כועס</div>
 <div><b>מה הייתי עושה אחרת:</b> משפט אחד</div>
 </div>
-<div class="task"><b>התרגיל</b>שבעה שורות, דקה אחרי כל עסקה. בסוף כל שבוע, 15 דקות לקרוא הכל. חפש דבר אחד בלבד: מה העסקאות המפסידות שלך עושות במשותף? זה מה שאתה מתקן בשבוע הבא.</div>
+<div class="cta">
+<p>רוצה את תבנית היומן המלאה שאני משתמש בה בעצמי?</p>
+<a class="btn ghost" href="yhalaly_landing_yoman.html">לתבנית היומן ←</a>
+</div>
 </section>
 
-<section class="chap" id="c5">
+<section id="c5">
 <span class="num">סיבה 5</span>
-<h2>אתה רודף אחרי כמות במקום איכות</h2>
-<p>יותר עסקאות לא שווה יותר כסף. ברוב המקרים, זה בדיוק ההפך.</p>
-<p>הסוחרים הכי עקביים שאני מכיר עושים מעט עסקאות. הם יושבים, מחכים, ומשעממים את עצמם עד שהשוק נותן בדיוק את מה שהם מחפשים. ואז הם לוחצים בלי היסוס.</p>
-<p>כשאתה עושה 15 עסקאות ביום, רובן לא עומדות בכללים שלך. הן עסקאות של שעמום, של פחד לפספס, של "בוא נראה". כל אחת מהן לוקחת קצת עמלה, קצת כסף, והרבה ריכוז שתצטרך לעסקה האמיתית.</p>
-<h3>איך עוברים לסלקטיביות</h3>
+<h2>אתה רודף אחרי <span class="hi">כמות</span></h2>
+<div class="mirror">
+<p>השוק שקט. משעמם. אתה יושב מול המסך כבר שעה.</p>
+<p>ואז אתה נכנס. לא כי יש סטאפ. כי "צריך לעשות משהו".</p>
+</div>
+<p>יותר עסקאות לא שווה יותר כסף. ברוב המקרים, זה בדיוק ההפך. כל עסקת שעמום לוקחת עמלה, קצת כסף, והרבה ריכוז שתצטרך לעסקה האמיתית שתגיע אחר כך.</p>
+<p>הסוחרים הכי עקביים שאני מכיר עושים <b>מעט</b> עסקאות. הם יושבים, משעממים את עצמם, ומחכים שהשוק ייתן בדיוק את מה שהם מחפשים. ואז לוחצים בלי היסוס.</p>
 <ul>
-<li><b>מקסימום עסקאות ליום:</b> קבע מספר, למשל 3. כשנגמרות, נגמר היום, גם אם השוק "נראה מעולה".</li>
-<li><b>שעות מסחר מוגדרות:</b> סחור רק בחלון שבו היומן מראה שאתה הכי טוב. מחוץ לו, אתה רק צופה.</li>
-<li><b>רשימת בדיקה לפני לחיצה:</b> חמש השורות מסיבה 1. אם חסרה אחת, לא נכנסים.</li>
+<li><b>מקסימום 3 עסקאות ביום.</b> נגמרו? נגמר היום. גם אם השוק "נראה מעולה".</li>
+<li><b>חלון מסחר קבוע.</b> רק בשעות שבהן היומן מראה שאתה חד.</li>
+<li><b>בדיקה לפני לחיצה.</b> חמש השורות מסיבה 1. חסרה אחת? לא נכנסים.</li>
 </ul>
-<p>זה ירגיש מתסכל בהתחלה. יהיו ימים שתראה את השוק זז בלעדיך. אבל בסוף החודש, כשתסתכל על התוצאות, תבין שהעסקאות שוויתרת עליהן היו בדיוק אלה שמחקו לך את הרווח בעבר.</p>
-<div class="task"><b>התרגיל</b>בשבוע הקרוב, מקסימום 3 עסקאות ביום. אחרי כל יום, תספור כמה עסקאות "כמעט עשית" וויתרת. בסוף השבוע, תבדוק בגרף מה היה קורה איתן. אתה תופתע.</div>
+<div class="task"><strong>התרגיל שלך</strong><p>שבוע, מקסימום 3 עסקאות ביום. כל עסקה שוויתרת עליה, תסמן בגרף. בסוף השבוע תבדוק מה היה קורה איתן. אתה תופתע.</p></div>
 </section>
 
-<section class="chap" id="plan">
+<section id="plan">
 <span class="num">בונוס</span>
-<h2>תבנית תוכנית מסחר בעמוד אחד</h2>
-<p>כל מה שקראת עד עכשיו מתחבר למסמך אחד. תמלא אותו, תדפיס אותו, ותשים אותו ליד המסך. זו התוכנית שלך.</p>
+<h2>תוכנית המסחר שלך <span class="hi">בעמוד אחד</span></h2>
+<p>כל מה שקראת מתחבר לכאן. תמלא, תדפיס, תשים ליד המסך.</p>
 <div class="tpl">
 <div><b>הנכס שאני סוחר:</b></div>
 <div><b>שעות המסחר שלי:</b> מ-____ עד ____</div>
-<div><b>הסטאפ שלי (5 שורות):</b> הקשר / מיקום / טריגר / סטופ / יעד</div>
+<div><b>הסטאפ שלי:</b> הקשר / מיקום / טריגר / סטופ / יעד</div>
 <div><b>איך אני מזהה סוג יום:</b> 3 השאלות מסיבה 2</div>
 <div><b>כמות קבועה לעסקה:</b></div>
 <div><b>גבול הפסד יומי:</b> ____ ₪</div>
 <div><b>מקסימום עסקאות ביום:</b></div>
 <div><b>אחרי שני הפסדים ברצף אני:</b></div>
-<div><b>אחרי כל עסקה אני:</b> ממלא יומן, 7 שורות</div>
-<div><b>בסוף כל שבוע אני:</b> קורא את היומן ובוחר דבר אחד לתקן</div>
+<div><b>אחרי כל עסקה:</b> 7 שורות ביומן</div>
+<div><b>בסוף כל שבוע:</b> קורא את היומן ובוחר דבר אחד לתקן</div>
 </div>
 </section>
 
-<section class="cta">
-<h2>קראת עד כאן? אז אתה רציני.</h2>
-<p>המדריך הזה נותן לך את המפה. אבל רוב הסוחרים נתקעים באותו מקום: הם יודעים מה לעשות, ובזמן אמת, מול המסך, הם לא עושים את זה.</p>
-<p>בוורקשופ על עקביות במסחר, אנחנו בונים את התוכנית שלך יחד, שורה אחרי שורה. אני עובר איתך על הסטאפ, על זיהוי סוג היום ועל הכללים שעוצרים את היום שמחזיר הכל. אתה יוצא עם מערכת מסחר אישית, כתובה ומוכנה לשימוש למחרת.</p>
-<p>לפרטים והרשמה: שלח הודעה באינסטגרם ל-<b>@Y.HALALY</b> עם המילה <b>עקביות</b>.</p>
+<section>
+<p class="big">עכשיו אתה <span class="hi">יודע</span> מה לעשות.</p>
+<div class="mirror">
+<p>אבל בוא נהיה כנים. ידעת חלק מזה גם לפני.</p>
+<p>הבעיה אף פעם לא הייתה הידע. הבעיה היא מה שקורה בזמן אמת, מול המסך, כשהכסף זז.</p>
+</div>
+<p>בדיוק בשביל זה בניתי שני מסלולים. תבחר את מה שמתאים לך:</p>
+<div class="ladder">
+<div class="offer main">
+<h4>תוכנית אימון 30 יום</h4>
+<div class="price">197 ₪</div>
+<p>תהליך אישי, יומן וליווי. 30 יום שבהם אתה בונה את התוכנית מהעמוד הקודם ולומד לעמוד בה, עם מישהו שבודק אותך.</p>
+<a class="btn" href="yhalaly_30days_sales_v2.html">אני רוצה להתחיל ←</a>
+</div>
+<div class="offer">
+<h4>מועדון הסוחרים</h4>
+<div class="price">500 ₪ לחודש</div>
+<p>זום שבועי, קבוצת וואטסאפ VIP וניתוחים חיים. בשביל מי שרוצה להיות בסביבה של סוחרים שעובדים ברצינות. ביטול בכל עת.</p>
+<a class="btn ghost" href="yhalaly_moadon_sales.html">פרטים על המועדון ←</a>
+</div>
+</div>
+<div class="cta">
+<p>לא בטוח מה מתאים לך? תכתוב לי ישירות.</p>
+<a class="btn ghost" href="https://wa.me/972528037222?text=%D7%94%D7%99%D7%99%20%D7%99%D7%A0%D7%99%D7%A8%2C%20%D7%A7%D7%A8%D7%90%D7%AA%D7%99%20%D7%90%D7%AA%20%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A%20%D7%A2%D7%9C%20%D7%A2%D7%A7%D7%91%D7%99%D7%95%D7%AA%20%D7%95%D7%96%D7%94%20%D7%A4%D7%92%D7%A2%20%D7%91%D7%99.%20%D7%9E%D7%94%20%D7%94%D7%A6%D7%A2%D7%93%20%D7%94%D7%91%D7%90%20%D7%A9%D7%9C%D7%99%3F">שיחה בוואטסאפ ←</a>
+</div>
 </section>
 
 <p class="disc">התוכן לצורכי לימוד בלבד ואינו מהווה ייעוץ השקעות או המלצה לפעולה. מסחר בחוזים עתידיים כרוך בסיכון גבוה, כולל אובדן כל הסכום המושקע ואף יותר ממנו. ביצועי עבר אינם מעידים על ביצועים עתידיים. אין בתוכן הבטחה לרווח.</p>
 </main>
+
+<div class="bar"><span>רוצה לבנות את זה עם ליווי?</span><a class="btn" href="yhalaly_30days_sales_v2.html">תוכנית 30 יום · 197 ₪</a></div>
+
 <script>
-var boxes=document.querySelectorAll('.quiz input'),s=document.getElementById('score');
-boxes.forEach(function(b){b.addEventListener('change',function(){var n=0;boxes.forEach(function(x){if(x.checked)n++});s.textContent='סימנת '+n+' מתוך 8';});});
+var boxes=document.querySelectorAll('.quiz input'),r=document.getElementById('result');
+function upd(){var n=0;boxes.forEach(function(x){if(x.checked)n++});
+var t=n<=2?'אתה בכיוון. המדריך יחדד אותך.':n<=5?'יש לך דליפה ממשית. היא מוסברת כאן, סיבה אחרי סיבה.':'אל תסחור מחר לפני שקראת עד הסוף. ואחרי זה, אל תעשה את זה לבד.';
+r.innerHTML='<b>'+n+' מתוך 8</b><p style="margin:6px 0 0">'+t+'</p>'+(n>=3?'<p style="margin:12px 0 0"><a class="btn" href="yhalaly_30days_sales_v2.html">לתוכנית 30 יום ←</a></p>':'');}
+boxes.forEach(function(b){b.addEventListener('change',upd)});
 </script>
 </body>
 </html>
