@@ -35,13 +35,11 @@ final class AlarmController {
             try? manager.cancel(id: id)
             store.mainAlarmID = nil
         }
-        let settings = store.settings
-        guard settings.isEnabled, await requestAuthorization() else { return }
+        guard store.isEnabled, await requestAuthorization() else { return }
 
-        let time = Alarm.Schedule.Relative.Time(hour: settings.hour, minute: settings.minute)
-        let weekdays = settings.weekdays.compactMap(Locale.Weekday.init(rawValue:))
-        let recurrence: Alarm.Schedule.Relative.Recurrence = weekdays.isEmpty ? .never : .weekly(weekdays)
-        let schedule = Alarm.Schedule.relative(.init(time: time, repeats: recurrence))
+        let time = Alarm.Schedule.Relative.Time(hour: store.hour, minute: store.minute)
+        let everyDay: [Locale.Weekday] = [.sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
+        let schedule = Alarm.Schedule.relative(.init(time: time, repeats: .weekly(everyDay)))
 
         let id = UUID()
         do {
@@ -53,10 +51,9 @@ final class AlarmController {
     }
 
     /// Called whenever the ringing alert is dismissed. Arms the next ring unless proof was given.
-    func alarmDismissed(graceMinutes: Int? = nil) async {
+    func alarmDismissed(graceMinutes: Int = 2) async {
         store.awaitingProof = true
-        let minutes = graceMinutes ?? store.settings.nagMinutes
-        let fireDate = Date().addingTimeInterval(TimeInterval(max(minutes, 1) * 60))
+        let fireDate = Date().addingTimeInterval(TimeInterval(graceMinutes * 60))
         let id = UUID()
         do {
             try await manager.schedule(id: id, configuration: configuration(schedule: .fixed(fireDate), isNag: true))
@@ -71,7 +68,6 @@ final class AlarmController {
         for id in store.nagAlarmIDs { try? manager.cancel(id: id) }
         store.nagAlarmIDs = []
         store.awaitingProof = false
-        store.lastSuccess = .now
     }
 
     private func configuration(schedule: Alarm.Schedule, isNag: Bool) -> AlarmManager.AlarmConfiguration<BrushAlarmMetadata> {
