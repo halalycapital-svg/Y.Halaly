@@ -153,7 +153,7 @@ so it survives the session:
 
 ```bash
 cd "$(git rev-parse --show-toplevel)" && git add .claude/instagram \
-  && git commit -m "ig: update instagram data" && git push -u origin HEAD
+  && git commit -m "ig: update instagram data" -- .claude/instagram && git push -u origin HEAD
 ```
 
 Stage only `.claude/instagram/`, never anything else. If the push fails, tell
