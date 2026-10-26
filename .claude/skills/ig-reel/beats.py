@@ -26,7 +26,7 @@ import json
 import re
 import sys
 
-WORD_RE = re.compile(r"[A-Za-z0-9$%'’-]+")
+WORD_RE = re.compile(r"[A-Za-z\u0590-\u05FF0-9$%'’״-]+")
 SENT_RE = re.compile(r"[^.!?]+[.!?]*")
 CONCRETE_RE = re.compile(r"\$\s?\d|\b\d[\d,.]*\b|(?<!^)\b[A-Z][a-z]{2,}\b", re.MULTILINE)
 STOPWORDS = {

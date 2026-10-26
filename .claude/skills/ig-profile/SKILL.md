@@ -10,6 +10,20 @@ description: >-
 
 # ig-profile
 
+## Language
+
+Everything this skill writes for the user (scripts, on-screen text, captions,
+comments, replies, DMs, stories, slides, plans) is in **spoken, everyday
+Hebrew**, addressing the audience in the **plural** (אתם, תעשו, שמרו, כתבו לי).
+Not formal or literary Hebrew, and not English translated into Hebrew. The
+English examples in this file show the structure, not the language. If
+`.claude/instagram/voice.md` exists, it refines this rule.
+
+The bundled scripts were built for English. Word counts and timings work on
+Hebrew, but checks that look for specific English words (stakes, address,
+slop terms, CTA phrases) will under-score Hebrew text. Treat those scores as a
+rough guide and judge the Hebrew yourself.
+
 Almost everybody optimises the wrong thing here. The profile is not a
 storefront people browse. It is a **decision screen**, arrived at from one
 reel, and it gets about three seconds to answer one question: is there more of

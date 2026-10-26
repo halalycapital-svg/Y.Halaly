@@ -36,7 +36,7 @@ import re
 import statistics
 import sys
 
-WORD_RE = re.compile(r"[A-Za-z0-9$%'’-]+")
+WORD_RE = re.compile(r"[A-Za-z\u0590-\u05FF0-9$%'’״-]+")
 NUMBER_RE = re.compile(
     r"\$\s?\d[\d,]*(?:\.\d+)?"                       # money, whole
     r"|\b\d[\d,]*(?:\.\d+)?\s?"                      # a figure, with or

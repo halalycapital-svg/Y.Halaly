@@ -9,6 +9,20 @@ description: >-
 
 # ig-reply
 
+## Language
+
+Everything this skill writes for the user (scripts, on-screen text, captions,
+comments, replies, DMs, stories, slides, plans) is in **spoken, everyday
+Hebrew**, addressing the audience in the **plural** (אתם, תעשו, שמרו, כתבו לי).
+Not formal or literary Hebrew, and not English translated into Hebrew. The
+English examples in this file show the structure, not the language. If
+`.claude/instagram/voice.md` exists, it refines this rule.
+
+The bundled scripts were built for English. Word counts and timings work on
+Hebrew, but checks that look for specific English words (stakes, address,
+slop terms, CTA phrases) will under-score Hebrew text. Treat those scores as a
+rough guide and judge the Hebrew yourself.
+
 The comment thread under your own post is where reach is decided. Every reply
 is another interaction on the post, replies arriving in the first hour do most
 of the work, and on Instagram a reply can also be a Reel, which is the single
