@@ -10,6 +10,20 @@ description: >-
 
 # ig-dm
 
+## Language
+
+Everything this skill writes for the user (scripts, on-screen text, captions,
+comments, replies, DMs, stories, slides, plans) is in **spoken, everyday
+Hebrew**, addressing the audience in the **plural** (אתם, תעשו, שמרו, כתבו לי).
+Not formal or literary Hebrew, and not English translated into Hebrew. The
+English examples in this file show the structure, not the language. If
+`.claude/instagram/voice.md` exists, it refines this rule.
+
+The bundled scripts were built for English. Word counts and timings work on
+Hebrew, but checks that look for specific English words (stakes, address,
+slop terms, CTA phrases) will under-score Hebrew text. Treat those scores as a
+rough guide and judge the Hebrew yourself.
+
 Instagram DMs are the only place on the platform where money actually changes
 hands, and they are also where most accounts burn the goodwill their content
 earned. The difference is entirely about who moved first.

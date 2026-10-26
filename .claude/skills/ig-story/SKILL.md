@@ -10,6 +10,20 @@ description: >-
 
 # ig-story
 
+## Language
+
+Everything this skill writes for the user (scripts, on-screen text, captions,
+comments, replies, DMs, stories, slides, plans) is in **spoken, everyday
+Hebrew**, addressing the audience in the **plural** (אתם, תעשו, שמרו, כתבו לי).
+Not formal or literary Hebrew, and not English translated into Hebrew. The
+English examples in this file show the structure, not the language. If
+`.claude/instagram/voice.md` exists, it refines this rule.
+
+The bundled scripts were built for English. Word counts and timings work on
+Hebrew, but checks that look for specific English words (stakes, address,
+slop terms, CTA phrases) will under-score Hebrew text. Treat those scores as a
+rough guide and judge the Hebrew yourself.
+
 Stories are not a smaller feed. The feed is how strangers find you. Stories are
 how the people who already follow you decide whether you are a person worth
 buying from, and they are the only surface on Instagram where a tap turns into
