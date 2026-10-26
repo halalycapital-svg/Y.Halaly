@@ -98,3 +98,16 @@ Say "write Tuesday" and I will draft it.
 Write the plan to `.claude/instagram/plan.md` so the other skills can read
 it. Nothing is scheduled or posted anywhere. This is a plan and the user runs
 it.
+
+## Saving
+
+After writing any file in `.claude/instagram/`, commit and push it right away
+so it survives the session:
+
+```bash
+cd "$(git rev-parse --show-toplevel)" && git add .claude/instagram \
+  && git commit -m "ig: update instagram data" && git push -u origin HEAD
+```
+
+Stage only `.claude/instagram/`, never anything else. If the push fails, tell
+the user instead of retrying with force.
