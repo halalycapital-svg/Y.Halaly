@@ -176,3 +176,16 @@ Write the swipe file to `.claude/instagram/swipe.md`. `/ig-reel` and
 the pack is working from the user's own evidence instead of from defaults.
 
 Nothing is posted, followed, liked or messaged by this skill. It reads.
+
+## Saving
+
+After writing any file in `.claude/instagram/`, commit and push it right away
+so it survives the session:
+
+```bash
+cd "$(git rev-parse --show-toplevel)" && git add .claude/instagram \
+  && git commit -m "ig: update instagram data" -- .claude/instagram && git push -u origin HEAD
+```
+
+Stage only `.claude/instagram/`, never anything else. If the push fails, tell
+the user instead of retrying with force.

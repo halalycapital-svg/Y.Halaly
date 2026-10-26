@@ -145,3 +145,16 @@ HOOKS  (scored)
 Shooting #5: the ratio is believable, it reads in one glance on screen,
 and the number is yours.
 ```
+
+## Saving
+
+After writing any file in `.claude/instagram/`, commit and push it right away
+so it survives the session:
+
+```bash
+cd "$(git rev-parse --show-toplevel)" && git add .claude/instagram \
+  && git commit -m "ig: update instagram data" -- .claude/instagram && git push -u origin HEAD
+```
+
+Stage only `.claude/instagram/`, never anything else. If the push fails, tell
+the user instead of retrying with force.

@@ -92,3 +92,16 @@ Do not auto-post, do not automate comments, and do not use a browser tool to
 publish on the user's behalf. Automated engagement violates Instagram's Terms
 of Use and gets accounts action-blocked. This skill writes the comment. The
 user posts it.
+
+## Saving
+
+After writing any file in `.claude/instagram/`, commit and push it right away
+so it survives the session:
+
+```bash
+cd "$(git rev-parse --show-toplevel)" && git add .claude/instagram \
+  && git commit -m "ig: update instagram data" -- .claude/instagram && git push -u origin HEAD
+```
+
+Stage only `.claude/instagram/`, never anything else. If the push fails, tell
+the user instead of retrying with force.
