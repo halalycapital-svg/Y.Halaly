@@ -1,407 +1,101 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>@y.halaly — סוחר תוך יומי</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap');
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      background: #0a0a0a;
-      min-height: 100vh;
-      font-family: 'Heebo', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 48px 20px 60px;
-      color: #f0f0f0;
-    }
-
-    /* Ambient glow */
-    body::before {
-      content: '';
-      position: fixed;
-      top: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(232,144,10,0.08) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 420px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Profile */
-    .profile {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 32px;
-    }
-
-    .avatar-wrap {
-      width: 88px;
-      height: 88px;
-      border-radius: 50%;
-      padding: 2px;
-      background: linear-gradient(135deg, #e8900a, #f5b942);
-      margin-bottom: 14px;
-    }
-
-    .avatar-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: #1a1a1a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      font-weight: 900;
-      color: #e8900a;
-      overflow: hidden;
-    }
-
-    .avatar-inner img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    .handle {
-      font-size: 13px;
-      color: #e8900a;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      margin-bottom: 6px;
-    }
-
-    .name {
-      font-size: 22px;
-      font-weight: 900;
-      color: #f0f0f0;
-      margin-bottom: 10px;
-    }
-
-    .bio {
-      font-size: 13px;
-      color: #888;
-      text-align: center;
-      line-height: 1.7;
-      max-width: 300px;
-    }
-
-    .bio span {
-      color: #e8900a;
-      font-weight: 700;
-    }
-
-    /* Divider */
-    .divider {
-      width: 40px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #e8900a, transparent);
-      margin: 24px auto;
-    }
-
-    /* Section label */
-    .section-label {
-      font-size: 10px;
-      color: #444;
-      letter-spacing: 0.2em;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-    }
-
-    /* Link buttons */
-    .link-btn {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      padding: 16px 20px;
-      border-radius: 10px;
-      text-decoration: none;
-      color: #f0f0f0;
-      font-family: 'Heebo', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      transition: all 0.18s ease;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid #1e1e1e;
-      background: #111;
-      cursor: pointer;
-    }
-
-    .link-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, rgba(232,144,10,0.05), transparent);
-      opacity: 0;
-      transition: opacity 0.18s;
-    }
-
-    .link-btn:hover::before { opacity: 1; }
-    .link-btn:hover {
-      border-color: #e8900a;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 20px rgba(232,144,10,0.12);
-    }
-
-    .link-btn:active { transform: translateY(0); }
-
-    .link-btn.primary {
-      background: #e8900a;
-      border-color: #e8900a;
-      color: #000;
-    }
-
-    .link-btn.primary:hover {
-      background: #f5a020;
-      box-shadow: 0 4px 24px rgba(232,144,10,0.35);
-    }
-
-    .link-btn.primary::before { display: none; }
-
-    .btn-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .btn-icon {
-      font-size: 20px;
-      width: 28px;
-      text-align: center;
-    }
-
-    .btn-text { text-align: right; }
-    .btn-title { font-size: 14px; font-weight: 700; display: block; }
-    .btn-sub {
-      font-size: 11px;
-      font-weight: 400;
-      opacity: 0.6;
-      display: block;
-      margin-top: 1px;
-    }
-
-    .link-btn.primary .btn-sub { opacity: 0.7; }
-
-    .arrow {
-      font-size: 16px;
-      opacity: 0.4;
-    }
-
-    .link-btn.primary .arrow { opacity: 0.6; }
-
-    /* Stats bar */
-    .stats {
-      display: flex;
-      gap: 1px;
-      margin-bottom: 24px;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid #1e1e1e;
-    }
-
-    .stat {
-      flex: 1;
-      padding: 14px 8px;
-      background: #111;
-      text-align: center;
-    }
-
-    .stat:not(:last-child) { border-left: 1px solid #1e1e1e; }
-
-    .stat-num {
-      font-size: 18px;
-      font-weight: 900;
-      color: #e8900a;
-      display: block;
-    }
-
-    .stat-label {
-      font-size: 10px;
-      color: #555;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      display: block;
-      margin-top: 2px;
-    }
-
-    /* Footer */
-    .footer {
-      margin-top: 40px;
-      text-align: center;
-      font-size: 11px;
-      color: #2a2a2a;
-      letter-spacing: 0.1em;
-    }
-  </style>
-<!-- Google Analytics -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>יניר הללי | סוחר תוך יומי</title>
+<meta name="description" content="יניר הללי, סוחר חוזים עתידיים על ES. תוכנית מסחר אישית לסוחרי 9-5, מועדון סוחרים עם חדר מסחר חי, ותבנית יומן בחינם.">
+<meta property="og:title" content="יניר הללי | סוחר תוך יומי">
+<meta property="og:description" content="יניר הללי, סוחר חוזים עתידיים על ES. תוכנית מסחר אישית לסוחרי 9-5, מועדון סוחרים עם חדר מסחר חי, ותבנית יומן בחינם.">
+<meta property="og:image" content="https://halalycapital-svg.github.io/Y.Halaly/tochnit/hero.jpg">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#FFFFFF}
+a{color:#C62828}a:hover{color:#8E1C1C}
+img,video{max-width:100%}
+details summary{list-style:none;cursor:pointer}
+details summary::-webkit-details-marker{display:none}
+details[open] .chev{transform:rotate(180deg)}
+.card-link{transition:transform .15s}
+@media (hover:hover){.card-link:hover{transform:translateY(-2px)}}
+</style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0S1C0PPV22"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0S1C0PPV22');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0S1C0PPV22');
+document.addEventListener('click',function(e){var a=e.target.closest('[data-cta]');if(a)gtag('event','cta_click',{cta:a.dataset.cta,page:'index'});});</script>
 </head>
 <body>
-  <div class="container">
-
-    <!-- Profile -->
-    <div class="profile">
-      <div class="avatar-wrap">
-        <div class="avatar-inner">
-          <img src="profile.jpeg" alt="יניר הללי" />
-        </div>
-      </div>
-      <div class="handle">@y.halaly</div>
-      <div class="name">יניר הללי</div>
-      <div class="bio">
-        סוחר תוך יומי שמדבר <span>בגובה העיניים</span><br />
-        Order Flow · Footprint · פסיכולוגיית מסחר
-      </div>
-    </div>
-
-    <!-- Stats -->
-    <div class="stats">
-      <div class="stat">
-        <span class="stat-num">6+</span>
-        <span class="stat-label">שנות מסחר</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">ES</span>
-        <span class="stat-label">התמחות</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">197₪</span>
-        <span class="stat-label">שבוע ניסיון במועדון</span>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- Primary CTA -->
-    <div class="section-label">חדש</div>
-    <a href="tochnit.html" class="link-btn primary">
-      <div class="btn-left">
-        <span class="btn-icon">📄</span>
-        <div class="btn-text">
-          <span class="btn-title">התוכנית: יודע הכל. מבצע חצי.</span>
-          <span class="btn-sub">תוכנית מסחר אישית לסוחרי 9-5 · 10 מקומות בסדנה החיה · 497 ₪</span>
-        </div>
-      </div>
-      <span class="arrow">←</span>
-    </a>
-
-    <div class="section-label">הצטרף למועדון</div>
-    <a href="yhalaly_moadon_sales.html" class="link-btn primary">
-      <div class="btn-left">
-        <span class="btn-icon">🎯</span>
-        <div class="btn-text">
-          <span class="btn-title">מועדון הסוחרים, Y.halaly</span>
-          <span class="btn-sub">חדר מסחר חי · זום שבועי · וואטסאפ VIP · שבוע ניסיון 197 ₪</span>
-        </div>
-      </div>
-      <span class="arrow">←</span>
-    </a>
-
-    <div class="divider"></div>
-
-    <!-- Social links -->
-    <div class="section-label">עקוב אחרי</div>
-
-    <a href="https://instagram.com/y.halaly" class="link-btn">
-      <div class="btn-left">
-        <span class="btn-icon">📸</span>
-        <div class="btn-text">
-          <span class="btn-title">אינסטגרם</span>
-          <span class="btn-sub">קרוסלות, רילס, ניתוחים יומיים</span>
-        </div>
-      </div>
-      <span class="arrow">←</span>
-    </a>
-
-    <a href="https://youtube.com/@yhalaly" class="link-btn">
-      <div class="btn-left">
-        <span class="btn-icon">▶️</span>
-        <div class="btn-text">
-          <span class="btn-title">יוטיוב</span>
-          <span class="btn-sub">סרטונים מעמיקים · ניתוח שוק שבועי</span>
-        </div>
-      </div>
-      <span class="arrow">←</span>
-    </a>
-
-    <div class="divider"></div>
-
-    <!-- Products -->
-    <div class="section-label">תוכניות</div>
-
-
-    <a href="yhalaly_landing_yoman.html" class="link-btn">
-      <div class="btn-left">
-        <span class="btn-icon">📓</span>
-        <div class="btn-text">
-          <span class="btn-title">יומן מסחר — חינם</span>
-          <span class="btn-sub">תבנית שעבדה עליי. שלך בחינם.</span>
-        </div>
-      </div>
-      <span class="arrow">←</span>
-    </a>
-
-    <a href="yhalaly_about.html" class="link-btn">
-      <div class="btn-left">
-        <span class="btn-icon">👤</span>
-        <div class="btn-text">
-          <span class="btn-title">אודות</span>
-          <span class="btn-sub">מי אני ואיך הגעתי לכאן</span>
-        </div>
-      </div>
-      <span class="arrow">←</span>
-    </a>
-
-    <a href="yhalaly_faq.html" class="link-btn">
-      <div class="btn-left">
-        <span class="btn-icon">❓</span>
-        <div class="btn-text">
-          <span class="btn-title">שאלות נפוצות</span>
-          <span class="btn-sub">כל מה שרצית לדעת</span>
-        </div>
-      </div>
-      <span class="arrow">←</span>
-    </a>
-
-    <div class="divider"></div>
-
-    <!-- Contact -->
-    <div class="section-label">צור קשר</div>
-
-    <a href="https://wa.me/qr/VDVXCSZXMZAGO1" class="link-btn">
-      <div class="btn-left">
-        <span class="btn-icon">💬</span>
-        <div class="btn-text">
-          <span class="btn-title">וואטסאפ ישיר</span>
-          <span class="btn-sub">שאלות · ליווי · פרטים על המועדון</span>
-        </div>
-      </div>
-      <span class="arrow">←</span>
-    </a>
-
-    <div class="footer">y.halaly © 2026</div>
-  </div>
+<div dir="rtl" style="background: #FFFFFF; color: #111317; font-family: 'Heebo', sans-serif; font-size: 18px; line-height: 1.8; width: 100%">
+<header style="position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,0.96); border-bottom: 1px solid #ECECEC">
+<div style="background: #111317; color: #FFFFFF; font-family: 'Rubik', sans-serif; font-weight: 700; font-size: 13px; line-height: 1.45; text-align: center; padding: 6px 12px">🚀 "התוכנית" בהשקה: 497 ₪ במקום 797 ₪ · עד 9.11 · 🔴 שבוע ניסיון במועדון: 197 ₪</div>
+<div style="max-width: 1080px; margin: 0 auto; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap">
+<a href="index.html" style="font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 20px; letter-spacing: -0.01em; color: #111317; text-decoration: none">יניר הללי <span style="font-weight: 500; color: #6A6F7A; font-size: 15px">· @y.halaly</span></a>
+<a data-cta="header" href="tochnit.html" style="background: #C62828; color: #FFFFFF; text-decoration: none; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 15px; padding: 12px 22px; border-radius: 10px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">אני רוצה את התוכנית</a>
+</div>
+</header>
+<section>
+<div style="max-width: 1080px; margin: 0 auto; padding: 56px 20px 72px; display: flex; flex-wrap: wrap; gap: 44px; align-items: center">
+<div style="flex: 999 1 480px; min-width: 0">
+<div style="display: inline-block; background: #111317; color: #FFFFFF; font-family: 'Rubik', sans-serif; font-weight: 700; font-size: 14px; padding: 6px 14px; border-radius: 6px; margin-bottom: 20px">סוחר תוך יומי · ES</div>
+<h1 style="font-family: 'Rubik', sans-serif; font-weight: 900; font-size: clamp(46px, 7.6vw, 88px); line-height: 1.0; letter-spacing: -0.03em; margin: 0 0 22px">יניר הללי.<br><span style="color: #C62828">סוחר שמדבר בגובה העיניים.</span></h1>
+<p style="font-family: 'Rubik', sans-serif; font-weight: 700; font-size: clamp(22px, 2.6vw, 28px); line-height: 1.35; margin: 0 0 18px">אתה לא צריך עוד אסטרטגיה. אתה צריך תוכנית, ומישהו שכבר עבר את זה.</p>
+<p style="margin: 0 0 30px; color: #3B3F48; max-width: 560px">6 שנים בשוק, 4 מהן על ES. שרפתי חשבון, עברתי על יותר מ-1,000 עסקאות שלי, וחזרתי. היום אני עוזר לסוחרים לעשות את מה שהם כבר יודעים, גם כשהכסף על השולחן.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center"><a data-cta="hero" href="tochnit.html" style="background: #C62828; color: #FFFFFF; border: 2px solid #C62828; text-decoration: none; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 18px; padding: 15px 28px; border-radius: 12px; min-height: 56px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center">אני רוצה את התוכנית, 497 ₪</a><a data-cta="hero_club" href="yhalaly_moadon_sales.html" style="color: #C62828; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 17px; min-height: 44px; display: inline-flex; align-items: center">או שבוע ניסיון במועדון, 197 ₪</a></div>
+</div>
+<div style="flex: 1 1 340px; min-width: 0">
+<img src="https://halalycapital-svg.github.io/Y.Halaly/tochnit/hero.jpg" alt="יניר הללי" style="width: 100%; max-width: 430px; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 22px; display: block; margin: 0 auto">
+</div>
+</div>
+</section>
+<section style="background: #111317; color: #FFFFFF">
+<div style="max-width: 1080px; margin: 0 auto; padding: 40px 20px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px"><div style="background: #1D2027; border-radius: 14px; padding: 20px; text-align: center"><div style="font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 32px; color: #FFFFFF; line-height: 1.2">6+</div><div style="font-size: 15px; color: #C9CCD3">שנות מסחר</div></div><div style="background: #1D2027; border-radius: 14px; padding: 20px; text-align: center"><div style="font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 32px; color: #FFFFFF; line-height: 1.2">4</div><div style="font-size: 15px; color: #C9CCD3">שנים על ES</div></div><div style="background: #1D2027; border-radius: 14px; padding: 20px; text-align: center"><div style="font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 32px; color: #FFFFFF; line-height: 1.2">+1,000</div><div style="font-size: 15px; color: #C9CCD3">עסקאות נותחו</div></div><div style="background: #1D2027; border-radius: 14px; padding: 20px; text-align: center"><div style="font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 32px; color: #FFFFFF; line-height: 1.2">68-70%</div><div style="font-size: 15px; color: #C9CCD3">אחוז הצלחה</div></div></div>
+</div>
+</section>
+<section style="background: #F5F5F4">
+<div style="max-width: 1080px; margin: 0 auto; padding: 88px 20px">
+<h2 style="font-family: 'Rubik', sans-serif; font-weight: 900; font-size: clamp(32px, 4.4vw, 46px); line-height: 1.12; letter-spacing: -0.02em; margin: 0 0 26px; text-align: center">מאיפה <span style="color: #C62828">מתחילים?</span></h2><p style="margin: 0 0 34px; text-align: center; color: #3B3F48">שני מסלולים. אחד בונה לך את התוכנית, השני שם אותך לידי מול המסך.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px"><div style="background: #FFFFFF; color: #111317; border: 3px solid #C62828; border-radius: 22px; padding: 30px 26px; display: flex; flex-direction: column">
+<div style="align-self: flex-start; background: #C62828; color: #FFFFFF; font-family: 'Rubik', sans-serif; font-weight: 700; font-size: 13px; padding: 4px 12px; border-radius: 6px; margin-bottom: 14px">השקה · עד 9.11</div>
+<h3 style="font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 26px; margin: 0 0 4px">התוכנית</h3>
+<div style="font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 48px; line-height: 1.1">497 ₪ <span style="font-size: 22px; color: #8A8F98; text-decoration: line-through; font-weight: 700">797</span></div>
+<div style="color: #6A6F7A; font-size: 15px; margin-bottom: 14px">תשלום אחד · כולל סדנה חיה ל-10 הראשונים</div>
+<p style="margin: 0 0 22px; font-size: 16px; line-height: 1.7; flex: 1">תוכנית מסחר אישית לסוחרי 9-5. 6 שיעורים קצרים, ובסוף יש לך דף אחד, שלך, שאומר לך מה לעשות עוד לפני שהשוק נפתח.</p>
+<a data-cta="offer_tochnit" href="tochnit.html" style="background: #C62828; color: #FFFFFF; border: 2px solid #C62828; text-decoration: none; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 18px; padding: 15px 28px; border-radius: 12px; min-height: 56px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center">אני רוצה את התוכנית</a>
+</div><div style="background: #111317; color: #FFFFFF; border-radius: 22px; padding: 30px 26px; display: flex; flex-direction: column">
+<div style="align-self: flex-start; background: #FFFFFF; color: #111317; font-family: 'Rubik', sans-serif; font-weight: 700; font-size: 13px; padding: 4px 12px; border-radius: 6px; margin-bottom: 14px">שבוע ניסיון</div>
+<h3 style="font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 26px; margin: 0 0 4px">מועדון הסוחרים</h3>
+<div style="font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 48px; line-height: 1.1">197 ₪</div>
+<div style="color: #C9CCD3; font-size: 15px; margin-bottom: 14px">7 ימים · מתקזז מהחודש הראשון · ביטול בכל עת</div>
+<p style="margin: 0 0 22px; font-size: 16px; line-height: 1.7; flex: 1">חדר מסחר חי לידי בכל פעם שאני עולה לעמדה, זום שבועי, ניתוח עסקה של החברים, ווואטסאפ VIP.</p>
+<a data-cta="offer_club" href="yhalaly_moadon_sales.html" style="background: #FFFFFF; color: #111317; border: 2px solid #FFFFFF; text-decoration: none; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 18px; padding: 15px 28px; border-radius: 12px; min-height: 56px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center">פרטים על המועדון</a>
+</div></div>
+</div>
+</section>
+<section>
+<div style="max-width: 760px; margin: 0 auto; padding: 88px 20px">
+<h2 style="font-family: 'Rubik', sans-serif; font-weight: 900; font-size: clamp(32px, 4.4vw, 46px); line-height: 1.12; letter-spacing: -0.02em; margin: 0 0 26px">בחינם, <span style="color: #C62828">בלי טפסים.</span></h2><div style="display: flex; flex-direction: column; gap: 12px"><a class="card-link" data-cta="free_guide" href="guide-consistency.html" style="display: flex; align-items: center; gap: 16px; background: #FFFFFF; border: 1px solid #ECECEC; border-radius: 16px; padding: 16px 18px; text-decoration: none; color: #111317; min-height: 56px"><span style="font-size: 26px">📘</span><span style="flex: 1"><span style="display: block; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 18px">מדריך חינמי: 5 הסיבות שאתה לא עקבי</span><span style="display: block; color: #6A6F7A; font-size: 15px; line-height: 1.5">אבחון של 60 שניות, ותרגיל לכל סיבה</span></span><span style="color: #C62828; font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 20px">←</span></a><a class="card-link" data-cta="free_journal" href="yhalaly_landing_yoman.html" style="display: flex; align-items: center; gap: 16px; background: #FFFFFF; border: 1px solid #ECECEC; border-radius: 16px; padding: 16px 18px; text-decoration: none; color: #111317; min-height: 56px"><span style="font-size: 26px">📓</span><span style="flex: 1"><span style="display: block; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 18px">תבנית יומן המסחר שלי, בחינם</span><span style="display: block; color: #6A6F7A; font-size: 15px; line-height: 1.5">התבנית שהפכה אותי מסוחר שמרגיש את הכסף לסוחר שמבין את עצמו</span></span><span style="color: #C62828; font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 20px">←</span></a></div>
+</div>
+</section>
+<section style="background: #F5F5F4">
+<div style="max-width: 760px; margin: 0 auto; padding: 88px 20px">
+<h2 style="font-family: 'Rubik', sans-serif; font-weight: 900; font-size: clamp(32px, 4.4vw, 46px); line-height: 1.12; letter-spacing: -0.02em; margin: 0 0 26px">עוד <span style="color: #C62828">ממני.</span></h2><div style="display: flex; flex-direction: column; gap: 12px"><a class="card-link" data-cta="ig" href="https://instagram.com/y.halaly" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 16px; background: #FFFFFF; border: 1px solid #ECECEC; border-radius: 16px; padding: 16px 18px; text-decoration: none; color: #111317; min-height: 56px"><span style="font-size: 26px">📸</span><span style="flex: 1"><span style="display: block; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 18px">אינסטגרם</span><span style="display: block; color: #6A6F7A; font-size: 15px; line-height: 1.5">קרוסלות, רילס וניתוחים יומיים</span></span><span style="color: #C62828; font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 20px">←</span></a><a class="card-link" data-cta="yt" href="https://youtube.com/@yhalaly" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 16px; background: #FFFFFF; border: 1px solid #ECECEC; border-radius: 16px; padding: 16px 18px; text-decoration: none; color: #111317; min-height: 56px"><span style="font-size: 26px">▶️</span><span style="flex: 1"><span style="display: block; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 18px">יוטיוב</span><span style="display: block; color: #6A6F7A; font-size: 15px; line-height: 1.5">סרטונים מעמיקים וניתוח שוק שבועי</span></span><span style="color: #C62828; font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 20px">←</span></a><a class="card-link" data-cta="about" href="yhalaly_about.html" style="display: flex; align-items: center; gap: 16px; background: #FFFFFF; border: 1px solid #ECECEC; border-radius: 16px; padding: 16px 18px; text-decoration: none; color: #111317; min-height: 56px"><span style="font-size: 26px">👤</span><span style="flex: 1"><span style="display: block; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 18px">אודות</span><span style="display: block; color: #6A6F7A; font-size: 15px; line-height: 1.5">מי אני ואיך הגעתי לכאן</span></span><span style="color: #C62828; font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 20px">←</span></a><a class="card-link" data-cta="faq" href="yhalaly_faq.html" style="display: flex; align-items: center; gap: 16px; background: #FFFFFF; border: 1px solid #ECECEC; border-radius: 16px; padding: 16px 18px; text-decoration: none; color: #111317; min-height: 56px"><span style="font-size: 26px">❓</span><span style="flex: 1"><span style="display: block; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 18px">שאלות נפוצות</span><span style="display: block; color: #6A6F7A; font-size: 15px; line-height: 1.5">כל מה שרצית לדעת</span></span><span style="color: #C62828; font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 20px">←</span></a><a class="card-link" data-cta="wa" href="https://wa.me/972528037222?text=%D7%94%D7%99%D7%99%20%D7%99%D7%A0%D7%99%D7%A8%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%90%D7%AA%D7%A8%20%D7%95%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94." target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 16px; background: #FFFFFF; border: 1px solid #ECECEC; border-radius: 16px; padding: 16px 18px; text-decoration: none; color: #111317; min-height: 56px"><span style="font-size: 26px">💬</span><span style="flex: 1"><span style="display: block; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 18px">וואטסאפ ישיר</span><span style="display: block; color: #6A6F7A; font-size: 15px; line-height: 1.5">שאלות, ליווי ופרטים על המועדון. אני עונה אישית</span></span><span style="color: #C62828; font-family: 'Rubik', sans-serif; font-weight: 900; font-size: 20px">←</span></a></div>
+</div>
+</section>
+<section style="background: #111317; color: #FFFFFF; position: relative; overflow: hidden">
+<video src="https://halalycapital-svg.github.io/Y.Halaly/tochnit/sea.mp4" autoplay="" muted="" loop="" playsinline="" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover"></video>
+<div style="position: absolute; inset: 0; background: rgba(10,12,16,0.72)"></div>
+<div style="position: relative; max-width: 760px; margin: 0 auto; padding: 110px 20px; text-align: center">
+<p style="margin: 0 0 14px; color: #C9CCD3; font-family: 'Rubik', sans-serif; font-weight: 700; font-size: 18px">ואם גם אתה יודע מה לעשות ולא עושה,</p>
+<h2 style="font-family: 'Rubik', sans-serif; font-weight: 900; font-size: clamp(34px, 5.4vw, 56px); line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 22px">את הידע כבר יש לך. <span style="color: #FF6B6B">חסרה לך תוכנית.</span></h2>
+<p style="margin: 0 0 32px; color: #C9CCD3">מחר בבוקר תפתח את המחשב. השאלה היחידה היא אם יהיה לך דף אחד מולך, או שוב רק רגש.</p>
+<a data-cta="final" href="tochnit.html" style="background: #FFFFFF; color: #111317; border: 2px solid #FFFFFF; text-decoration: none; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 18px; padding: 15px 28px; border-radius: 12px; min-height: 56px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center">אני רוצה את התוכנית, 497 ₪</a>
+</div>
+</section>
+<footer style="background: #111317; color: #8E929C; text-align: center; font-size: 13px; padding: 28px 20px">
+<a href="index.html" style="color: #FFFFFF; text-decoration: none; font-family: 'Rubik', sans-serif; font-weight: 800">@y.halaly · יניר הללי</a><br>התוכן לצורכי לימוד בלבד ואינו מהווה ייעוץ השקעות. מסחר בחוזים עתידיים כרוך בסיכון גבוה.
+</footer>
+</div>
 </body>
 </html>
