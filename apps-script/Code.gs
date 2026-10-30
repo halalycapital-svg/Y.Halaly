@@ -6,7 +6,7 @@
  * Execute as: Me, Who has access: Anyone.
  */
 const SITE = 'https://halalycapital-svg.github.io/Y.Halaly/';
-const COMMUNITY_URL = ''; // WhatsApp community invite link, optional
+const COMMUNITY_URL = 'https://chat.whatsapp.com/LicoXEnhp2g5dKtpWNDUs1';
 
 const PRODUCTS = {
   yoman: {
