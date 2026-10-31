@@ -11,6 +11,9 @@ const LAUNCH_END = new Date('2026-11-09T23:59:59+02:00');
 const DAY = 24 * 60 * 60 * 1000;
 const FOLLOW_UP_DAYS = [1, 2, 4, 6]; // days after signup for each follow-up email
 const HEADERS = ['תאריך', 'שם', 'מייל', 'אישר דיוור', 'עמוד', 'מייל 2', 'מייל 3', 'מייל 4', 'מייל 5', 'הוסר (לסמן x)'];
+const ZOOM_URL = '';        // Zoom link for the live session (fill in before Monday)
+const RECORDING_URL = '';   // recording link (fill in after the session)
+const LIVE_AT = new Date('2026-11-02T18:45:00+02:00');
 const SENT_COL = 5;                       // zero-based index of 'מייל 2'
 const REMOVED_COL = HEADERS.length - 1;    // zero-based index of 'הוסר'
 
@@ -34,6 +37,15 @@ const PRODUCTS = {
     intro: 'הנה המדריך המלא כ-PDF, מצורף למייל הזה. 5 הסיבות, ותרגיל אחד לכל סיבה.',
     tip: 'אל תקרא את כולו הערב. תבחר סיבה אחת, תעשה את התרגיל שלה מחר בסשן, ותראה מה קורה.',
     opener: 'לפני יומיים הורדת ממני את המדריך על 5 הסיבות שאתה לא עקבי.'
+  },
+  live: {
+    sheet: 'לידים - הדרכה חיה',
+    label: 'הדרכה חיה 2.11',
+    noSequence: true,
+    subject: 'נרשמת ✅ יום שני, 18:45',
+    intro: 'נרשמת להדרכה החיה: "בונים את חלון המסחר שלך ב-30 דקות". יום שני 2.11, 18:45, בזום.',
+    tip: 'שריין ביומן עכשיו. ביום שני בבוקר אשלח לך את הלינק לזום, ועוד אחד רבע שעה לפני שמתחילים.',
+    opener: ''
   },
   plan: {
     sheet: 'לידים - דף התוכנית',
@@ -65,9 +77,9 @@ function doPost(e) {
   } finally {
     lock.releaseLock();
   }
-  const pdf = UrlFetchApp.fetch(SITE + product.file).getBlob().setName(product.fileName);
-  MailApp.sendEmail({ to: email, subject: product.subject, name: 'יניר הללי',
-    htmlBody: welcome_(name, product), attachments: [pdf] });
+  const mail = { to: email, subject: product.subject, name: 'יניר הללי', htmlBody: product.noSequence ? liveWelcome_(name, product) : welcome_(name, product) };
+  if (product.file) mail.attachments = [UrlFetchApp.fetch(SITE + product.file).getBlob().setName(product.fileName)];
+  MailApp.sendEmail(mail);
   return ContentService.createTextOutput('ok');
 }
 
@@ -91,6 +103,7 @@ function sendFollowUps() {
   const now = Date.now();
   Object.keys(PRODUCTS).forEach(function (key) {
     const product = PRODUCTS[key];
+    if (product.noSequence) return;
     const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(product.sheet);
     if (!sh || sh.getLastRow() < 2) return;
     const rows = sh.getRange(2, 1, sh.getLastRow() - 1, HEADERS.length).getValues();
@@ -150,7 +163,7 @@ function wrap_(inner) {
 }
 
 function tagOf_(product) {
-  return product.sheet === PRODUCTS.yoman.sheet ? 'yoman' : product.sheet === PRODUCTS.guide.sheet ? 'guide' : 'plan';
+  return Object.keys(PRODUCTS).filter(function (k) { return PRODUCTS[k] === product; })[0] || 'lead';
 }
 
 function welcome_(name, product) {
@@ -251,3 +264,71 @@ const FOLLOW_UPS = [
     };
   }
 ];
+
+
+/* ---------- 4. Live session (Monday 2.11, 18:45) ---------- */
+function liveWelcome_(name, product) {
+  return wrap_(hi_(name)
+    + L_(b_('נרשמת. ✅'), '', 'יום שני, 2.11.', '18:45 בדיוק.', 'זום. חצי שעה.')
+    + L_('מה נעשה שם?', '', 'נבנה יחד את חלון המסחר שלך.', 'מתי אתה באמת פנוי,', 'עם ראש נקי,', 'ומתי אתה לא נוגע בפלטפורמה.')
+    + L_('בלי חפירות.', 'בלי למרוח.', '', 'ותצא עם משימה אחת', 'שאתה עושה כבר באותו ערב.')
+    + L_(b_('עכשיו, 10 שניות:'), 'תשריין ביומן.', 'יום שני, 18:45.')
+    + L_('ביום שני בבוקר', 'אשלח לך את הלינק לזום.', 'ועוד אחד רבע שעה לפני.')
+    + sign_()
+    + L_('נ.ב.', '', 'יש לך שאלה שבוערת לך על המסחר?', 'תענה למייל הזה.', 'אני עונה על חלק מהשאלות בלייב.')
+    + offers_('live-welcome'));
+}
+
+const LIVE_BLASTS = {
+  morning: function (name) {
+    return { subject: 'היום ב-18:45 (הלינק בפנים)', html: hi_(name)
+      + L_('הערב.', '18:45 בדיוק.', '', 'חצי שעה.', 'ובסוף, משימה אחת.')
+      + L_(b_('הנה הלינק לזום:'), a_('מכאן נכנסים <<<', ZOOM_URL || SITE))
+      + L_('טיפ אחד:', 'תביא דף ועט.', '', 'לא בשביל לסכם.', 'בשביל לכתוב את החלון שלך', 'תוך כדי.')
+      + sign_() };
+  },
+  soon: function (name) {
+    return { subject: 'מתחילים בעוד 15 דקות', html: hi_(name)
+      + L_('עוד רבע שעה.', '', 'מקלחות? אוכל?', 'אני יודע.', '', 'חצי שעה, ואתה בחזרה בבית.')
+      + L_(a_('לזום מכאן <<<', ZOOM_URL || SITE))
+      + sign_() };
+  },
+  replay: function (name) {
+    const live = launchLive_();
+    return { subject: 'למקרה שפספסת...', html: hi_(name)
+      + L_('אתמול ב-18:45', 'בנינו את חלון המסחר.', '', 'אם היית שם, כבר יש לך אותו.', 'אם לא?', 'זה בסדר. החיים קורים.')
+      + (RECORDING_URL ? L_(b_('הנה ההקלטה:'), a_('לצפייה מכאן <<<', RECORDING_URL)) : '')
+      + L_('אבל תבין,', '', 'חלון המסחר הוא שורה אחת', 'מתוך 11 בתוכנית המסחר שלך.', '', 'גבול הפסד יומי.', 'כמות קבועה.', 'מה עושים אחרי 2 הפסדים.', 'באיזה צבע אתה היום.')
+      + L_('את כל השאר', 'בונים יחד ב"התוכנית".')
+      + (live ? L_(b_('מחיר ההשקה נגמר ב-9.11.'), '497 ₪ במקום 797 ₪,', 'ו-10 הראשונים מקבלים סדנה חיה איתי.') : '')
+      + L_(a_('מכאן נכנסים <<<', link_('live-replay')))
+      + sign_()
+      + offers_('live-replay') };
+  }
+};
+
+function sendLiveBlast_(stage) {
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(PRODUCTS.live.sheet);
+  if (!sh || sh.getLastRow() < 2) return;
+  const rows = sh.getRange(2, 1, sh.getLastRow() - 1, HEADERS.length).getValues();
+  const col = { morning: 0, soon: 1, replay: 2 }[stage];
+  rows.forEach(function (r, i) {
+    if (!r[2] || String(r[REMOVED_COL]).trim() || r[SENT_COL + col]) return;
+    const mail = LIVE_BLASTS[stage](r[1]);
+    MailApp.sendEmail({ to: r[2], subject: mail.subject, name: 'יניר הללי', htmlBody: wrap_(mail.html) });
+    sh.getRange(i + 2, SENT_COL + col + 1).setValue(new Date());
+  });
+}
+function liveMorning() { sendLiveBlast_('morning'); }
+function liveSoon() { sendLiveBlast_('soon'); }
+function liveReplay() { sendLiveBlast_('replay'); }
+
+function setupLive() {
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (['liveMorning', 'liveSoon', 'liveReplay'].indexOf(t.getHandlerFunction()) >= 0) ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('liveMorning').timeBased().at(new Date('2026-11-02T10:00:00+02:00')).create();
+  ScriptApp.newTrigger('liveSoon').timeBased().at(new Date('2026-11-02T18:30:00+02:00')).create();
+  ScriptApp.newTrigger('liveReplay').timeBased().at(new Date('2026-11-03T10:00:00+02:00')).create();
+  sheet_(PRODUCTS.live);
+}
