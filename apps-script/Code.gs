@@ -9,8 +9,10 @@ const SITE = 'https://halalycapital-svg.github.io/Y.Halaly/';
 const COMMUNITY_URL = 'https://chat.whatsapp.com/LicoXEnhp2g5dKtpWNDUs1';
 const LAUNCH_END = new Date('2026-11-09T23:59:59+02:00');
 const DAY = 24 * 60 * 60 * 1000;
-const FOLLOW_UP_DAYS = [1, 3, 5]; // email 2, 3, 4 after signup
-const HEADERS = ['תאריך', 'שם', 'מייל', 'אישר דיוור', 'עמוד', 'מייל 2', 'מייל 3', 'מייל 4', 'הוסר (לסמן x)'];
+const FOLLOW_UP_DAYS = [1, 2, 4, 6]; // days after signup for each follow-up email
+const HEADERS = ['תאריך', 'שם', 'מייל', 'אישר דיוור', 'עמוד', 'מייל 2', 'מייל 3', 'מייל 4', 'מייל 5', 'הוסר (לסמן x)'];
+const SENT_COL = 5;                       // zero-based index of 'מייל 2'
+const REMOVED_COL = HEADERS.length - 1;    // zero-based index of 'הוסר'
 
 const PRODUCTS = {
   yoman: {
@@ -57,7 +59,9 @@ function doPost(e) {
   const lock = LockService.getScriptLock();
   lock.waitLock(20000);
   try {
-    sheet_(product).appendRow([new Date(), name, email, p.consent ? 'כן' : 'לא', p.src || '', '', '', '', '']);
+    const row = [new Date(), name, email, p.consent ? 'כן' : 'לא', p.src || ''];
+    while (row.length < HEADERS.length) row.push('');
+    sheet_(product).appendRow(row);
   } finally {
     lock.releaseLock();
   }
@@ -76,6 +80,9 @@ function sheet_(product) {
     sh.setFrozenRows(1);
     sh.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
   }
+  if (sh.getRange(1, 1, 1, HEADERS.length).getValues()[0].join('|') !== HEADERS.join('|')) {
+    sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]).setFontWeight('bold');
+  }
   return sh;
 }
 
@@ -89,14 +96,14 @@ function sendFollowUps() {
     const rows = sh.getRange(2, 1, sh.getLastRow() - 1, HEADERS.length).getValues();
     rows.forEach(function (r, i) {
       const joined = new Date(r[0]).getTime(), name = r[1], email = r[2];
-      if (r[3] !== 'כן' || String(r[8]).trim() || !email || !joined) return;
-      for (let n = 0; n < 3; n++) {
-        if (r[5 + n]) continue;                         // already sent
-        if (n > 0 && !r[4 + n]) break;                  // previous one not sent yet
+      if (r[3] !== 'כן' || String(r[REMOVED_COL]).trim() || !email || !joined) return;
+      for (let n = 0; n < FOLLOW_UPS.length; n++) {
+        if (r[SENT_COL + n]) continue;                  // already sent
+        if (n > 0 && !r[SENT_COL + n - 1]) break;       // previous one not sent yet
         if (now - joined < FOLLOW_UP_DAYS[n] * DAY) break;
         const mail = FOLLOW_UPS[n](name, product);
         MailApp.sendEmail({ to: email, subject: mail.subject, name: 'יניר הללי', htmlBody: wrap_(mail.html) });
-        sh.getRange(i + 2, 6 + n).setValue(new Date());
+        sh.getRange(i + 2, SENT_COL + n + 1).setValue(new Date());
         break;                                          // one email per lead per run
       }
     });
@@ -177,7 +184,27 @@ const FOLLOW_UPS = [
         + offers_('email2')
     };
   },
-  // Email 3: day 3. The ATM story + 3 numbers to write tonight.
+  // Email 3: day 2. Traders 9-5 are always left behind. 18:00, short, one task.
+  function (name, product) {
+    return {
+      subject: '18:00',
+      html: hi_(name)
+        + L_('10:00 בבוקר.', '', 'אתה באמצע יום עבודה,', 'והטלפון מקפיץ התראה:', '', b_('"הלייב מתחיל עכשיו!"'))
+        + L_('עוד וובינר.', 'עוד זום.', 'עוד שידור חי…', '', 'כולם בבוקר.', 'כולם בשעות שאתה בעבודה.')
+        + L_('ואתה?', '', 'בישיבה.', 'מול לקוח.', 'בדרך.')
+        + L_('מבטיח לעצמך שתראה את ההקלטה בערב.', '', 'ובערב?', 'מקלחות. אוכל. הילדים.', 'ההקלטה נשארת פתוחה בטאב', 'עד שהיא נסגרת לבד.')
+        + L_(b_('סוחרי 9-5 תמיד נשארים מאחור.'))
+        + L_('אני יודע.', '', 'כי גם אני עובד במשרה רגילה.')
+        + L_('אז אצלי זה הפוך:', '', b_('18:00.'), 'חצי שעה.', 'קצר, מדויק, ממוקד.', '', 'בלי חפירות.', 'בלי למרוח.', 'בלי מילים מיותרות.')
+        + L_('וכל מפגש נגמר במשימה אחת', 'שאתה עושה כבר באותו רגע.', '', 'ב-18:30 אתה בבית.', 'עם הראש בבית.')
+        + L_('ועוד משהו שאף אחד לא מספר לך…', '', 'הבורסה בארה"ב נפתחת ב-16:30', 'שעון ישראל.', '', 'סוחר 9-5 שסוחר ES', 'לא "מנסה בערבים".', b_('הוא סוחר בשעות הכי טובות של השוק.'))
+        + L_(b_('המשימה שלך, עכשיו, 2 דקות:'), '', 'תכתוב את חלון המסחר שלך.', 'לא מתי שהשוק פתוח.', 'מתי שאתה באמת פנוי, עם ראש נקי.', '', 'מ-____ עד ____.', '', 'מחוץ לחלון הזה?', 'לא פותחים את הפלטפורמה.')
+        + sign_()
+        + L_('נ.ב.', '', 'רוצה לראות איך זה נראה?', 'שבוע אחד בחדר המסחר,', 'כולל הזום של 18:00.', '', '197 ₪, ואם אתה נשאר במועדון', 'אתה מקבל את זה בחזרה.', '', a_('מכאן מצטרפים לשבוע <<<', clubLink_('email-1800')))
+        + offers_('email-1800')
+    };
+  },
+  // Email 4: day 4. The ATM story + 3 numbers to write tonight.
   function (name, product) {
     return {
       subject: '10 שקלים מתחת לכיסא',
