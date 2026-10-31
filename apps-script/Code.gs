@@ -100,6 +100,7 @@ function sheet_(product) {
 
 /* ---------- 2. Follow-ups (hourly) ---------- */
 function sendFollowUps() {
+  sendDueBroadcasts_();
   const now = Date.now();
   Object.keys(PRODUCTS).forEach(function (key) {
     const product = PRODUCTS[key];
@@ -331,4 +332,84 @@ function setupLive() {
   ScriptApp.newTrigger('liveSoon').timeBased().at(new Date('2026-11-02T18:30:00+02:00')).create();
   ScriptApp.newTrigger('liveReplay').timeBased().at(new Date('2026-11-03T10:00:00+02:00')).create();
   sheet_(PRODUCTS.live);
+}
+
+// ---------- One-off broadcasts (checked by the hourly sendFollowUps trigger) ----------
+// Sent once to every opted-in, not-removed email across all lead sheets (deduped).
+function h_(t) { return '<p style="margin:30px 0 10px;font-size:20px;font-weight:700;color:#C62828">' + t + '</p>'; }
+function bcLink_(c) { return SITE + 'tochnit.html?utm_source=email&utm_medium=broadcast&utm_campaign=' + c; }
+
+const BROADCASTS = [
+  { id: 'rules5', at: new Date('2026-11-04T12:00:00+02:00'),
+    subject: 'הצצה ל-5 החוקים שרצים אצלי בעמדה',
+    html: function (name) {
+      const L = bcLink_('5rules');
+      return hi_(name)
+        + L_('יש לי שאלה אליך.')
+        + L_('כמה החלטות אתה מקבל', b_('בזמן שעסקה פתוחה?'))
+        + L_('להיכנס או לחכות.', 'להזיז את הסטופ או לא.', 'לסגור עכשיו,', 'או לתת לזה "עוד רגע".')
+        + L_('כל החלטה כזאת, ברגע לחוץ,', b_('היא עוד הזדמנות לטעות.'))
+        + L_('אצלי?', 'רוב ההחלטות האלה', 'כבר לא מתקבלות בעמדה.', '', b_('הן מתקבלות לפני.'))
+        + L_('עברתי על יותר מ-1,000 עסקאות שלי.', 'אחת אחת.', '', 'מה עשיתי.', 'מה הרגשתי.', 'ואיפה בדיוק סטיתי', 'כשהכסף היה על השולחן.')
+        + L_('ומזה יצאו חוקים.', '', b_('חוקים שמחליטים במקומי,'), b_('דווקא ברגעים הכי לחוצים.'))
+        + L_('במייל הזה אני חושף לך 5 מהם.', '', 'קבל 👇')
+        + h_('1. חוק הצבע')
+        + L_('לפני שאני עולה לעמדה,', 'אני שואל את עצמי שאלה אחת:', '', b_('באיזה צבע אני היום?'))
+        + L_('🟢 ירוק: הראש נקי. זה היום שלי.', '🟡 צהוב: משהו מציק. מקטין גז.', '🔴 אדום: לא פותח את המחשב.')
+        + L_('זה נשמע קטן.', '', b_('זה החוק שהכי חסך לי כסף.'))
+        + L_('וזה רק הראשון…')
+        + h_('2. חוק השאלה הראשונה')
+        + L_('סוחר כתב לי לפני כמה שבועות:', '', b_('"אני שורף כסף יום אחרי יום,'), b_('בשעה הראשונה."'))
+        + L_('לא נתתי לו אסטרטגיה.', 'נתתי לו שאלה אחת,', 'לשאול לפני שהוא מחפש עסקה:', '', b_('איזה יום זה?'))
+        + L_('יומיים אחרי הוא כתב לי:', '', b_('"זה סיפור אחר כשאני מסתכל על הגרף'), b_('ולא מחפש עסקה."'))
+        + L_('עכשיו תחזיק חזק…', '', 'כי החוק הבא הוא זה', 'שהכי כואב לקיים.')
+        + h_('3. חוק הסטופ לכניסה')
+        + L_('לפני כמה ימים הייתה לי עסקה', 'עם 20 נקודות רווח.', '', b_('היא נסגרה בחצי נקודה.'))
+        + L_('באסה? ברור.')
+        + L_('אבל ככה זה עובד אצלי:', 'ברגע שהיעד הראשון נלקח (1:1),', 'המערכת מקדמת את הסטופ לכניסה.', '', b_('לבד.'))
+        + L_('מאותו רגע', b_('אני לא יכול להפסיד בעסקה.'), '', 'בלי "עוד רגע".', 'בלי לקוות.', 'בלי להחליט ברגש.')
+        + h_('4. חוק העסקה האחת')
+        + L_(b_('עסקה אחת לסשן.'))
+        + L_('פספסת? תתעד.', 'נוערת? תתעד.', 'מתעצבן שאין לך עוד ניסיון?', 'מצוין.', b_('תתעד.'))
+        + L_('תחשוב על הסט האחרון בחדר כושר.', 'כשכבר אין כוח,', 'התנועה מפסיקה להיות נקייה.')
+        + L_('בגרף זה בדיוק אותו דבר.', '', b_('כל החלטה נוספת'), b_('יוצאת קצת פחות טובה.'))
+        + L_('ועכשיו החוק שמחבר את כולם…')
+        + h_('5. חוק השאלה האחרונה')
+        + L_('בסוף כל יום מסחר,', 'אני שואל שאלה אחת:', '', b_('עשיתי את מה שתכננתי?'))
+        + L_('לא "כמה הרווחתי".')
+        + L_('פעם רדפתי אחרי 100 דולר ביום.', 'היום אני רודף אחרי יום', 'שבו עשיתי בדיוק את מה שתכננתי.', '', b_('והכסף? הוא תוצאה.'))
+        + '<div style="margin:30px 0 0;border-top:2px solid #C62828;padding-top:22px"></div>'
+        + L_('ועכשיו הדבר הכי חשוב 👇')
+        + L_('5 החוקים האלה', b_('לא עובדים כשהם בראש.'), '', 'הם עובדים כשהם כתובים.', 'על דף אחד.', 'שלך.', 'שאתה פותח לפני שאתה עולה לעמדה.')
+        + L_('את הדף הזה בדיוק', 'אני בונה עכשיו עם סוחרים,', b_('ב"התוכנית".'))
+        + L_('6 שיעורים קצרים. שיעור ביום.', 'ובסוף יש לך דף אחד,', b_('עם החוקים שלך. לא שלי.'))
+        + L_(b_('מחיר השקה: 497 ₪ במקום 797 ₪.'), 'רק ל-10 הראשונים.', 'רק עד 9.11.', 'ומקבלים גם סדנה חיה איתי.')
+        + L_(a_('אני רוצה את התוכנית <<<', L))
+        + sign_()
+        + L_(b_('נ.ב.'), 'איזה מ-5 החוקים הכי חסר לך היום?', 'תענה למייל הזה עם המספר.', 'אני קורא כל תשובה.')
+        + offers_('5rules');
+    } }
+];
+
+function sendDueBroadcasts_() {
+  const props = PropertiesService.getScriptProperties();
+  BROADCASTS.forEach(function (bc) {
+    if (Date.now() < bc.at.getTime() || props.getProperty('bc_' + bc.id)) return;
+    props.setProperty('bc_' + bc.id, new Date().toISOString()); // mark first: never send twice
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const seen = {};
+    let n = 0;
+    Object.keys(PRODUCTS).forEach(function (k) {
+      const sh = ss.getSheetByName(PRODUCTS[k].sheet);
+      if (!sh || sh.getLastRow() < 2) return;
+      sh.getRange(2, 1, sh.getLastRow() - 1, HEADERS.length).getValues().forEach(function (r) {
+        const email = String(r[2]).trim().toLowerCase();
+        if (!email || seen[email] || String(r[3]).trim() !== 'כן' || String(r[REMOVED_COL]).trim()) return;
+        seen[email] = true;
+        MailApp.sendEmail({ to: email, subject: bc.subject, name: 'יניר הללי', htmlBody: wrap_(bc.html(r[1])) });
+        n++;
+      });
+    });
+    props.setProperty('bc_' + bc.id, new Date().toISOString() + ' sent:' + n);
+  });
 }
