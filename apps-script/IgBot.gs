@@ -4,12 +4,14 @@
  * sends the commenter a private DM (Instagram "private reply"), answers publicly, and logs it.
  *
  * One-time setup (Apps Script editor, same project as Code.gs):
- * 1. Project Settings -> Script Properties -> add IG_TOKEN = <long-lived Instagram token>
- * 2. Run setupIgBot() once (creates the 5-minute and weekly triggers).
- * Token: Meta app with "Instagram API with Instagram Login", permissions
- *   instagram_business_basic, instagram_business_manage_comments, instagram_business_manage_messages.
+ * 1. Project Settings -> Script Properties -> add IG_TOKEN = <Page access token, never expires>
+ * 2. Run setupIgBot() once (creates the 5-minute trigger).
+ * Token: Meta app "Yanir Trading Assistant" (Facebook Login), Page token of "יניר הללי Yanir Halaly"
+ *   with instagram_basic, instagram_manage_comments, instagram_manage_messages, pages_show_list.
  */
-const IG_API = 'https://graph.instagram.com/v21.0';
+const IG_API = 'https://graph.facebook.com/v21.0';
+const IG_USER_ID = '17841401304113168';   // @y.halaly
+const IG_PAGE_ID = '104984852444798';     // FB page linked to @y.halaly
 const IG_SELF = 'y.halaly';
 const IG_LOG_SHEET = 'בוט אינסטגרם';
 const IG_MAX_AGE_DAYS = 6;      // private replies are allowed up to 7 days after the comment
@@ -100,17 +102,17 @@ function igScanComments() {
     const since = Number(props.getProperty('IG_SINCE') || 0);
     const cutoff = Math.max(since, Date.now() - IG_MAX_AGE_DAYS * DAY);
     const sh = igLogSheet_();
-    const media = (igGet_('/me/media', { fields: 'id,permalink,timestamp', limit: IG_POSTS_TO_SCAN }).data) || [];
+    const media = (igGet_('/' + IG_USER_ID + '/media', { fields: 'id,permalink,timestamp', limit: IG_POSTS_TO_SCAN }).data) || [];
     let i = 0;
     media.forEach(function (m) {
-      const comments = (igGet_('/' + m.id + '/comments', { fields: 'id,text,username,timestamp,from', limit: 50 }).data) || [];
+      const comments = (igGet_('/' + m.id + '/comments', { fields: 'id,text,username,timestamp', limit: 50 }).data) || [];
       comments.forEach(function (c) {
         if (done[c.id] || !c.text || c.username === IG_SELF) return;
         if (new Date(c.timestamp).getTime() < cutoff) return;
         const rule = IG_RULES.filter(function (r) { return r.match.test(c.text); })[0];
         if (!rule) return;
         done[c.id] = Date.now();
-        const dm = igPost_('/me/messages', { recipient: { comment_id: c.id }, message: { text: rule.dm() } });
+        const dm = igPost_('/' + IG_PAGE_ID + '/messages', { recipient: { comment_id: c.id }, message: { text: rule.dm() } });
         const pub = igPost_('/' + c.id + '/replies', { message: IG_PUBLIC_REPLIES[(i++) % IG_PUBLIC_REPLIES.length] });
         sh.appendRow([new Date(), c.username, c.text, rule.name, m.permalink,
           dm.code < 300 ? 'נשלח' : 'שגיאה ' + dm.code + ': ' + dm.body.slice(0, 200),
@@ -125,13 +127,6 @@ function igScanComments() {
   }
 }
 
-/** Weekly: long-lived Instagram tokens last 60 days; refreshing keeps them alive. */
-function igRefreshToken() {
-  const res = UrlFetchApp.fetch('https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=' + igToken_(), { muteHttpExceptions: true });
-  const body = JSON.parse(res.getContentText() || '{}');
-  if (body.access_token) PropertiesService.getScriptProperties().setProperty('IG_TOKEN', body.access_token);
-}
-
 /**
  * Run once. Only comments written after this moment are answered by the bot
  * (older ones were handled by hand), unless you pass a date.
@@ -142,7 +137,6 @@ function setupIgBot() {
   });
   PropertiesService.getScriptProperties().setProperty('IG_SINCE', String(Date.now()));
   ScriptApp.newTrigger('igScanComments').timeBased().everyMinutes(5).create();
-  ScriptApp.newTrigger('igRefreshToken').timeBased().everyWeeks(1).create();
   igLogSheet_();
-  igGet_('/me', { fields: 'id,username' }); // fails fast if the token is wrong
+  igGet_('/' + IG_USER_ID, { fields: 'id,username' }); // fails fast if the token is wrong
 }
