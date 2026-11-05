@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>המתנה שלך: 5 דברים בעמדה | סוחרי 9-5</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--red:#C62828;--ink:#111317;--mute:#6A6F7A;--line:#ECECEC}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font-family:Rubik,Arial,sans-serif;line-height:1.6;font-size:18px}
+.wrap{max-width:560px;margin:0 auto;padding:36px 18px 64px}
+h1{font-weight:900;font-size:32px;line-height:1.2;margin:0 0 12px}
+h1 em{font-style:normal;color:var(--red)}
+p{margin:0 0 14px}
+.form{background:#fff;border:1px solid var(--line);border-right:4px solid var(--red);border-radius:16px;padding:22px;margin-top:22px}
+label{display:block;font-weight:500;margin:12px 0 6px}
+input[type=text],input[type=email]{width:100%;padding:13px 14px;border:1px solid #D6D8DD;border-radius:12px;font:inherit;font-size:17px}
+.chk{display:flex;gap:10px;align-items:flex-start;margin-top:16px;color:var(--mute);font-size:15px}
+.chk input{margin-top:5px}
+button{width:100%;margin-top:20px;background:var(--red);color:#fff;border:0;border-radius:14px;padding:16px;font:inherit;font-weight:800;font-size:18px;cursor:pointer}
+button:disabled{opacity:.6}
+.err{color:var(--red);font-size:15px;margin-top:10px;display:none}
+.gift{display:none;margin-top:22px}
+.gift .card{background:#fff;border:1px solid var(--line);border-right:4px solid var(--red);border-radius:16px;padding:18px 20px;margin:12px 0;color:var(--mute);font-size:17px}
+.gift .card b{display:block;color:var(--ink);font-weight:800;font-size:19px;margin-bottom:2px}
+.n{color:var(--red);font-weight:900;margin-left:8px}
+.fine{font-size:13px;color:var(--mute);margin-top:28px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>את חמשת הדברים אני שולח <em>במייל.</em> ויש שם עוד.</h1>
+  <p>כשאני בעסקה והלב דופק, אני לא סומך על הראש שלי. אני סומך על דף קטן שכתבתי לעצמי מראש. את הדף הזה אני שולח לך עכשיו למייל.</p>
+  <p>ומי שנרשם מקבל ממני גם את מה שאני לא מעלה לאינסטגרם: תובנות מהעמדה, מה שלמדתי מהימים הרעים, ודברים שעובדים לי באמת. בלי ספאם. רק ערך.</p>
+
+  <form class="form" id="f">
+    <label for="n">שם</label>
+    <input type="text" id="n" name="name" required autocomplete="given-name">
+    <label for="e">מייל</label>
+    <input type="email" id="e" name="email" required autocomplete="email" dir="ltr">
+    <label class="chk"><input type="checkbox" id="c" name="consent" required><span>אני רוצה לקבל ממך תובנות ותוכן במייל. אפשר להסיר את עצמי בכל רגע.</span></label>
+    <button type="submit" id="b">שלחו לי את המתנה 🎁</button>
+    <div class="err" id="err">משהו לא עבד. נסה שוב, או כתוב לי בוואטסאפ.</div>
+  </form>
+
+  <p class="fine">רוצים להיות בתוך השיחה? אפשר גם להצטרף לקהילת סוחרי 9-5 בוואטסאפ: <a href="https://chat.whatsapp.com/LicoXEnhp2g5dKtpWNDUs1">הקישור כאן</a>.</p>
+  <p class="fine">התוכן לצורכי לימוד בלבד ואינו ייעוץ השקעות. מסחר כרוך בסיכון.</p>
+
+  <!-- המתנה נפתחת רק אחרי שליחת הטופס -->
+  <div class="gift" id="gift">
+    <h1 style="font-size:26px">המתנה שלך</h1>
+    <div class="card"><b><span class="n">1</span>תסתכל על התוכנית, לא על הרווח</b>כתבת לפני הכניסה איפה הסטופ, איפה היעד ומה אתה עושה אם זה הולך הפוך.</div>
+    <div class="card"><b><span class="n">2</span>תכסה את ה-P/L</b>המספר הירוק והאדום הוא מה שמזיז אותך. הסתר אותו, ותסתכל על המחיר והגרף בלבד.</div>
+    <div class="card"><b><span class="n">3</span>נשימה איטית</b>4 שניות פנימה, 6 שניות החוצה, חמש פעמים.</div>
+    <div class="card"><b><span class="n">4</span>תקום מהכיסא</b>תזוז, תמתח, תיגש לכוס מים. הסטופ שלך שומר עליך.</div>
+    <div class="card"><b><span class="n">5</span>תבדוק במרווחים קבועים</b>תחליט מראש כל כמה דקות אתה מסתכל. כל טיק הוא הזמנה לנגיעה מיותרת.</div>
+  </div>
+</div>
+<script>
+// TODO: להחליף בכתובת ה-Web App של Apps Script אחרי שנוסיף doPost ללידים
+const ENDPOINT = '';
+const f = document.getElementById('f');
+f.addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  const btn = document.getElementById('b');
+  const err = document.getElementById('err');
+  btn.disabled = true; err.style.display = 'none';
+  const data = { name: f.name.value.trim(), email: f.email.value.trim(), source: 'desk', ts: new Date().toISOString() };
+  try {
+    if (ENDPOINT) {
+      await fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', headers: {'Content-Type':'text/plain'}, body: JSON.stringify(data) });
+    }
+    f.style.display = 'none';
+    document.getElementById('gift').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch (e) {
+    err.style.display = 'block'; btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
