@@ -39,6 +39,12 @@ const IG_RULES = [
       return 'היי 🙌🏽\nראיתי שהגבת "יעד", הנה דף המישוב היומי שלי 👇\n' + FEEDBACK_PAGE + '\n\n'
         + 'ממלאים 5 דקות אחרי שסוגרים את המסך.\nודבר אחד חשוב: לא כותבים את הרווח. בכוונה.\n\n' + extra;
     } },
+  { name: 'desk', match: /עמדה/, dm: function () {
+      return 'היי 🙌🏽\nהנה 5 הדברים לעשות בעמדה כשאתה בעסקה, כדי להוריד לחץ ולא להחליט מהרגש 👇\n'
+        + SITE + 'free/at-the-desk.html?utm_source=instagram&utm_medium=bot\n\n'
+        + 'אחרי שתנסה, כתוב לי כאן מה עזר לך הכי הרבה. אני עונה אישית.\n\n'
+        + 'ובקהילת סוחרי 9-5 בוואטסאפ אני משתף תוכן כל שבוע, בחינם:\n' + COMMUNITY_URL;
+    } },
   { name: 'protocol', match: /פרוטוקול|תוכנית/, dm: function () {
       const live = Date.now() < LAUNCH_END.getTime();
       return 'היי 🎯\nשמח שאתה פה.\n\n'
