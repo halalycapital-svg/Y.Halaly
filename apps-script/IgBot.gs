@@ -98,6 +98,38 @@ function igLogSheet_() {
   return sh;
 }
 
+
+/* ---------- Facebook Page comments (same rules, same log sheet) ---------- */
+function fbScanComments_() {
+  const props = PropertiesService.getScriptProperties();
+  const done = JSON.parse(props.getProperty('FB_DONE') || '{}');
+  const since = Number(props.getProperty('IG_SINCE') || 0);
+  const cutoff = Math.max(since, Date.now() - IG_MAX_AGE_DAYS * DAY);
+  const sh = igLogSheet_();
+  let posts = [];
+  try { posts = (igGet_('/' + IG_PAGE_ID + '/posts', { fields: 'id,permalink_url', limit: IG_POSTS_TO_SCAN }).data) || []; } catch (err) { return; }
+  posts.forEach(function (p) {
+    let comments = [];
+    try { comments = (igGet_('/' + p.id + '/comments', { fields: 'id,message,from,created_time', limit: 50 }).data) || []; } catch (err) { return; }
+    comments.forEach(function (c) {
+      const text = c.message || '';
+      if (done[c.id] || !text || (c.from && c.from.id === IG_PAGE_ID)) return;
+      if (new Date(c.created_time).getTime() < cutoff) return;
+      const rule = IG_RULES.filter(function (r) { return r.match.test(text); })[0];
+      if (!rule) return;
+      done[c.id] = Date.now();
+      const name = (c.from && c.from.name) || '';
+      const dm = igPost_('/' + IG_PAGE_ID + '/messages', { recipient: { comment_id: c.id }, message: { text: rule.dm() } });
+      const pub = igPost_('/' + c.id + '/comments', { message: IG_PUBLIC_REPLIES[Object.keys(done).length % IG_PUBLIC_REPLIES.length] });
+      sh.appendRow([new Date(), name, text, rule.name, 'FB ' + (p.permalink_url || p.id),
+        dm.code < 300 ? 'נשלח' : 'שגיאה ' + dm.code + ': ' + dm.body.slice(0, 200),
+        pub.code < 300 ? 'נשלח' : 'שגיאה ' + pub.code, c.id]);
+    });
+  });
+  Object.keys(done).forEach(function (k) { if (done[k] < Date.now() - 8 * DAY) delete done[k]; });
+  props.setProperty('FB_DONE', JSON.stringify(done));
+}
+
 /** Runs every 5 minutes. */
 function igScanComments() {
   const lock = LockService.getScriptLock();
@@ -128,6 +160,7 @@ function igScanComments() {
     // keep only recent ids so the property stays small
     Object.keys(done).forEach(function (k) { if (done[k] < Date.now() - 8 * DAY) delete done[k]; });
     props.setProperty('IG_DONE', JSON.stringify(done));
+    try { fbScanComments_(); } catch (err) { console.error('FB scan: ' + err); }
   } finally {
     lock.releaseLock();
   }
