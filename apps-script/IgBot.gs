@@ -99,35 +99,54 @@ function igLogSheet_() {
 }
 
 
-/* ---------- Facebook Page comments (same rules, same log sheet) ---------- */
-function fbScanComments_() {
-  const props = PropertiesService.getScriptProperties();
-  const done = JSON.parse(props.getProperty('FB_DONE') || '{}');
-  const since = Number(props.getProperty('IG_SINCE') || 0);
-  const cutoff = Math.max(since, Date.now() - IG_MAX_AGE_DAYS * DAY);
-  const sh = igLogSheet_();
-  let posts = [];
-  try { posts = (igGet_('/' + IG_PAGE_ID + '/posts', { fields: 'id,permalink_url', limit: IG_POSTS_TO_SCAN }).data) || []; } catch (err) { return; }
+/* ---------- one handler for IG and FB, top-level comments AND replies ----------
+   Rule: one bot answer per person per thread (root comment). */
+function botHandle_(c, user, isSelf, rootId, link, platform, sh, done, publicIdx) {
+  const text = c.text || c.message || '';
+  if (!text || isSelf || done[c.id]) return publicIdx;
+  const tTime = new Date(c.timestamp || c.created_time).getTime();
+  const since = Number(PropertiesService.getScriptProperties().getProperty('IG_SINCE') || 0);
+  if (tTime < Math.max(since, Date.now() - IG_MAX_AGE_DAYS * DAY)) return publicIdx;
+  const rule = IG_RULES.filter(function (r) { return r.match.test(text); })[0];
+  if (!rule) return publicIdx;
+  const threadKey = 'u:' + user + ':' + rootId;
+  if (done[threadKey]) return publicIdx; // already answered this person in this thread
+  done[c.id] = Date.now();
+  done[threadKey] = Date.now();
+  const pageId = platform === 'FB' ? IG_PAGE_ID : IG_PAGE_ID;
+  const dm = igPost_('/' + pageId + '/messages', { recipient: { comment_id: c.id }, message: { text: rule.dm() } });
+  const pubPath = platform === 'FB' ? '/' + c.id + '/comments' : '/' + c.id + '/replies';
+  const pub = igPost_(pubPath, { message: IG_PUBLIC_REPLIES[publicIdx % IG_PUBLIC_REPLIES.length] });
+  sh.appendRow([new Date(), user, text, rule.name, (platform === 'FB' ? 'FB ' : '') + link,
+    dm.code < 300 ? 'נשלח' : 'שגיאה ' + dm.code + ': ' + dm.body.slice(0, 200),
+    pub.code < 300 ? 'נשלח' : 'שגיאה ' + pub.code, c.id]);
+  return publicIdx + 1;
+}
+
+function scanPlatform_(platform, posts, sh, done) {
+  const fields = platform === 'FB' ? 'id,message,from,created_time' : 'id,text,username,timestamp';
+  const repFields = platform === 'FB' ? 'id,message,from,created_time' : 'id,text,username,timestamp';
+  let idx = Object.keys(done).length;
   posts.forEach(function (p) {
-    let comments = [];
-    try { comments = (igGet_('/' + p.id + '/comments', { fields: 'id,message,from,created_time', limit: 50 }).data) || []; } catch (err) { return; }
-    comments.forEach(function (c) {
-      const text = c.message || '';
-      if (done[c.id] || !text || (c.from && c.from.id === IG_PAGE_ID)) return;
-      if (new Date(c.created_time).getTime() < cutoff) return;
-      const rule = IG_RULES.filter(function (r) { return r.match.test(text); })[0];
-      if (!rule) return;
-      done[c.id] = Date.now();
-      const name = (c.from && c.from.name) || '';
-      const dm = igPost_('/' + IG_PAGE_ID + '/messages', { recipient: { comment_id: c.id }, message: { text: rule.dm() } });
-      const pub = igPost_('/' + c.id + '/comments', { message: IG_PUBLIC_REPLIES[Object.keys(done).length % IG_PUBLIC_REPLIES.length] });
-      sh.appendRow([new Date(), name, text, rule.name, 'FB ' + (p.permalink_url || p.id),
-        dm.code < 300 ? 'נשלח' : 'שגיאה ' + dm.code + ': ' + dm.body.slice(0, 200),
-        pub.code < 300 ? 'נשלח' : 'שגיאה ' + pub.code, c.id]);
+    const link = p.permalink || p.permalink_url || p.id;
+    let roots = [];
+    try { roots = (igGet_('/' + p.id + '/comments', { fields: fields, limit: 50 }).data) || []; } catch (err) { return; }
+    roots.forEach(function (c) {
+      const user = platform === 'FB' ? ((c.from && c.from.name) || '') : c.username;
+      const isSelf = platform === 'FB' ? (c.from && c.from.id === IG_PAGE_ID) : user === IG_SELF;
+      const norm = { id: c.id, text: c.text || c.message, timestamp: c.timestamp, created_time: c.created_time };
+      idx = botHandle_(norm, user, isSelf, c.id, link, platform, sh, done, idx);
+      // replies under this comment (ריפליי)
+      let reps = [];
+      try { reps = (igGet_('/' + c.id + '/replies', { fields: repFields, limit: 50 }).data) || []; } catch (err) { reps = []; }
+      reps.forEach(function (r) {
+        const ru = platform === 'FB' ? ((r.from && r.from.name) || '') : r.username;
+        const rSelf = platform === 'FB' ? (r.from && r.from.id === IG_PAGE_ID) : ru === IG_SELF;
+        const rn = { id: r.id, text: r.text || r.message, timestamp: r.timestamp, created_time: r.created_time };
+        idx = botHandle_(rn, ru, rSelf, c.id, link, platform, sh, done, idx);
+      });
     });
   });
-  Object.keys(done).forEach(function (k) { if (done[k] < Date.now() - 8 * DAY) delete done[k]; });
-  props.setProperty('FB_DONE', JSON.stringify(done));
 }
 
 /** Runs every 5 minutes. */
@@ -137,30 +156,17 @@ function igScanComments() {
   try {
     const props = PropertiesService.getScriptProperties();
     const done = JSON.parse(props.getProperty('IG_DONE') || '{}');
-    const since = Number(props.getProperty('IG_SINCE') || 0);
-    const cutoff = Math.max(since, Date.now() - IG_MAX_AGE_DAYS * DAY);
     const sh = igLogSheet_();
     const media = (igGet_('/' + IG_USER_ID + '/media', { fields: 'id,permalink,timestamp', limit: IG_POSTS_TO_SCAN }).data) || [];
-    let i = 0;
-    media.forEach(function (m) {
-      const comments = (igGet_('/' + m.id + '/comments', { fields: 'id,text,username,timestamp', limit: 50 }).data) || [];
-      comments.forEach(function (c) {
-        if (done[c.id] || !c.text || c.username === IG_SELF) return;
-        if (new Date(c.timestamp).getTime() < cutoff) return;
-        const rule = IG_RULES.filter(function (r) { return r.match.test(c.text); })[0];
-        if (!rule) return;
-        done[c.id] = Date.now();
-        const dm = igPost_('/' + IG_PAGE_ID + '/messages', { recipient: { comment_id: c.id }, message: { text: rule.dm() } });
-        const pub = igPost_('/' + c.id + '/replies', { message: IG_PUBLIC_REPLIES[(i++) % IG_PUBLIC_REPLIES.length] });
-        sh.appendRow([new Date(), c.username, c.text, rule.name, m.permalink,
-          dm.code < 300 ? 'נשלח' : 'שגיאה ' + dm.code + ': ' + dm.body.slice(0, 200),
-          pub.code < 300 ? 'נשלח' : 'שגיאה ' + pub.code, c.id]);
-      });
-    });
-    // keep only recent ids so the property stays small
+    scanPlatform_('IG', media, sh, done);
     Object.keys(done).forEach(function (k) { if (done[k] < Date.now() - 8 * DAY) delete done[k]; });
     props.setProperty('IG_DONE', JSON.stringify(done));
-    try { fbScanComments_(); } catch (err) { console.error('FB scan: ' + err); }
+    let fbPosts = [];
+    try { fbPosts = (igGet_('/' + IG_PAGE_ID + '/posts', { fields: 'id,permalink_url', limit: IG_POSTS_TO_SCAN }).data) || []; } catch (err) { fbPosts = []; }
+    const fbDone = JSON.parse(props.getProperty('FB_DONE') || '{}');
+    scanPlatform_('FB', fbPosts, sh, fbDone);
+    Object.keys(fbDone).forEach(function (k) { if (fbDone[k] < Date.now() - 8 * DAY) delete fbDone[k]; });
+    props.setProperty('FB_DONE', JSON.stringify(fbDone));
   } finally {
     lock.releaseLock();
   }
