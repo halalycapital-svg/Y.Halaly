@@ -130,7 +130,7 @@ function scanPlatform_(platform, posts, sh, done) {
   posts.forEach(function (p) {
     const link = p.permalink || p.permalink_url || p.id;
     let roots = [];
-    try { roots = (igGet_('/' + p.id + '/comments', { fields: fields, limit: 50 }).data) || []; } catch (err) { return; }
+    try { roots = (igGet_('/' + p.id + '/comments', { fields: fields, limit: 50 }).data) || []; } catch (err) { console.log(platform + ' comments error ' + p.id + ': ' + err); return; }
     roots.forEach(function (c) {
       const user = platform === 'FB' ? ((c.from && c.from.name) || '') : c.username;
       const isSelf = platform === 'FB' ? (c.from && c.from.id === IG_PAGE_ID) : user === IG_SELF;
@@ -162,7 +162,12 @@ function igScanComments() {
     Object.keys(done).forEach(function (k) { if (done[k] < Date.now() - 8 * DAY) delete done[k]; });
     props.setProperty('IG_DONE', JSON.stringify(done));
     let fbPosts = [];
-    try { fbPosts = (igGet_('/' + IG_PAGE_ID + '/posts', { fields: 'id,permalink_url', limit: IG_POSTS_TO_SCAN }).data) || []; } catch (err) { fbPosts = []; }
+    try { fbPosts = (igGet_('/' + IG_PAGE_ID + '/posts', { fields: 'id,permalink_url', limit: IG_POSTS_TO_SCAN }).data) || []; } catch (err) { console.log('FB posts error: ' + err); fbPosts = []; }
+    try {
+      const reels = (igGet_('/' + IG_PAGE_ID + '/video_reels', { fields: 'id,permalink_url', limit: IG_POSTS_TO_SCAN }).data) || [];
+      fbPosts = fbPosts.concat(reels);
+    } catch (err) { console.log('FB reels error: ' + err); }
+    console.log('FB posts scanned: ' + fbPosts.length);
     const fbDone = JSON.parse(props.getProperty('FB_DONE') || '{}');
     scanPlatform_('FB', fbPosts, sh, fbDone);
     Object.keys(fbDone).forEach(function (k) { if (fbDone[k] < Date.now() - 8 * DAY) delete fbDone[k]; });
