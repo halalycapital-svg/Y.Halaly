@@ -59,19 +59,16 @@ button:disabled{opacity:.6}
   </div>
 </div>
 <script>
-// TODO: להחליף בכתובת ה-Web App של Apps Script אחרי שנוסיף doPost ללידים
-const ENDPOINT = '';
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycby88wrOteigU9EFmT543juHhh2A4xGfvJ8AYlm8LXEaQGqQWidESvtTpR8rWlL5vg68/exec';
 const f = document.getElementById('f');
 f.addEventListener('submit', async (ev) => {
   ev.preventDefault();
   const btn = document.getElementById('b');
   const err = document.getElementById('err');
   btn.disabled = true; err.style.display = 'none';
-  const data = { name: f.name.value.trim(), email: f.email.value.trim(), source: 'desk', ts: new Date().toISOString() };
+  const body = new URLSearchParams({ product: 'desk', name: f.name.value.trim(), email: f.email.value.trim(), consent: f.consent.checked ? '1' : '', src: 'desk-gate' });
   try {
-    if (ENDPOINT) {
-      await fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', headers: {'Content-Type':'text/plain'}, body: JSON.stringify(data) });
-    }
+    await fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', body });
     f.style.display = 'none';
     document.getElementById('gift').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });

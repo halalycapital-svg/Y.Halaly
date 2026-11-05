@@ -18,6 +18,16 @@ const SENT_COL = 5;                       // zero-based index of 'מייל 2'
 const REMOVED_COL = HEADERS.length - 1;    // zero-based index of 'הוסר'
 
 const PRODUCTS = {
+  desk: {
+    sheet: 'לידים - עמדה',
+    label: 'חמשת הדברים בעמדה',
+    noSequence: true,
+    custom: true,
+    subject: 'המתנה שלך: 5 דברים בעמדה 🎁',
+    intro: '',
+    tip: '',
+    opener: ''
+  },
   yoman: {
     sheet: 'לידים - יומן',
     label: 'תבנית יומן המסחר',
@@ -77,7 +87,7 @@ function doPost(e) {
   } finally {
     lock.releaseLock();
   }
-  const mail = { to: email, subject: product.subject, name: 'יניר הללי', htmlBody: product.noSequence ? liveWelcome_(name, product) : welcome_(name, product) };
+  const mail = { to: email, subject: product.subject, name: 'יניר הללי', htmlBody: product.custom ? deskWelcome_(name) : product.noSequence ? liveWelcome_(name, product) : welcome_(name, product) };
   if (product.file) mail.attachments = [UrlFetchApp.fetch(SITE + product.file).getBlob().setName(product.fileName)];
   MailApp.sendEmail(mail);
   return ContentService.createTextOutput('ok');
@@ -268,6 +278,21 @@ const FOLLOW_UPS = [
 
 
 /* ---------- 4. Live session (Monday 2.11, 18:45) ---------- */
+function deskWelcome_(name) {
+  return wrap_(hi_(name)
+    + L_(b_('הנה המתנה שלך. ✅'), '', 'כשאני בעסקה והלב דופק,', 'אני לא סומך על הראש שלי.', 'אני סומך על דף קטן שכתבתי לעצמי מראש.')
+    + L_(b_('5 דברים לעשות בעמדה כשאתה בעסקה:'), '',
+        b_('1. תסתכל על התוכנית, לא על הרווח.'), 'כתבת לפני הכניסה איפה הסטופ ואיפה היעד.',
+        b_('2. תכסה את ה-P/L.'), 'המספר הירוק והאדום הוא מה שמזיז אותך.',
+        b_('3. נשימה איטית.'), '4 שניות פנימה, 6 החוצה, חמש פעמים.',
+        b_('4. תקום מהכיסא.'), 'תזוז, תיגש למים. הסטופ שלך שומר עליך.',
+        b_('5. תבדוק במרווחים קבועים.'), 'כל טיק הוא הזמנה לנגיעה מיותרת.')
+    + L_('ומי שנרשם מקבל ממני גם', 'את מה שאני לא מעלה לאינסטגרם:', 'תובנות מהעמדה, ומה שלמדתי מהימים הרעים.', 'בלי ספאם. רק ערך.')
+    + sign_()
+    + L_('נ.ב.', '', 'רוצים להיות בתוך השיחה?', 'קהילת סוחרי 9-5 בוואטסאפ:', COMMUNITY_URL)
+    + offers_('desk-welcome'));
+}
+
 function liveWelcome_(name, product) {
   return wrap_(hi_(name)
     + L_(b_('נרשמת. ✅'), '', 'יום שני, 2.11.', '18:45 בדיוק.', 'גוגל מיט. חצי שעה.')

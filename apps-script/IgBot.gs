@@ -40,8 +40,8 @@ const IG_RULES = [
         + 'ממלאים 5 דקות אחרי שסוגרים את המסך.\nודבר אחד חשוב: לא כותבים את הרווח. בכוונה.\n\n' + extra;
     } },
   { name: 'desk', match: /עמדה/, dm: function () {
-      return 'היי 🙌🏽\nהנה 5 הדברים לעשות בעמדה כשאתה בעסקה, כדי להוריד לחץ ולא להחליט מהרגש 👇\n'
-        + SITE + 'free/at-the-desk.html?utm_source=instagram&utm_medium=bot\n\n'
+      return 'היי 🙌🏽\nהכנתי לך מתנה: 5 הדברים לעשות בעמדה כשאתה בעסקה 🎁\nכדי לקבל אותה, השאר שם ומייל כאן, והיא נשלחת אליך:\n'
+        + SITE + 'free/desk-gate.html?utm_source=instagram&utm_medium=bot\n\n'
         + 'אחרי שתנסה, כתוב לי כאן מה עזר לך הכי הרבה. אני עונה אישית.\n\n'
         + 'ובקהילת סוחרי 9-5 בוואטסאפ אני משתף תוכן כל שבוע, בחינם:\n' + COMMUNITY_URL;
     } },
