@@ -16,7 +16,7 @@ html{scroll-behavior:smooth}
 body{margin:0;background:#FFFFFF}
 a{color:#C62828}a:hover{color:#8E1C1C}
 img,video{max-width:100%}
-[data-launch="off"]{display:none}
+[data-launch="on"],[data-launch="off"]{display:none !important}
 .ln-old{text-decoration:line-through;color:#8A8F98;font-weight:700}
 #ln-pop{position:fixed;inset:0;z-index:50;background:rgba(10,12,16,0.72);display:none;align-items:center;justify-content:center;padding:16px}
 #ln-pop.open{display:flex}
@@ -365,8 +365,8 @@ var SPOTS_LEFT = 10;
   each('[data-pop-close]', function (b) { b.addEventListener('click', close); });
   pop.addEventListener('click', function (e) { if (e.target === pop) close(); });
   addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
-  setTimeout(function () { open('time'); }, 120000);
-  document.addEventListener('mouseout', function (e) { if (!e.relatedTarget && e.clientY <= 0) open('exit'); });
+  // popup disabled: no fake urgency
+  
 })();
 </script>
 <script>
